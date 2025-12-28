@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { FileText, Mail } from "lucide-react";
 import { personalInfo } from "@/lib/data";
 import { SiGithub, SiLinkedin, SiGooglescholar } from "react-icons/si";
@@ -16,7 +16,7 @@ export function HeroSection() {
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         <div className="flex flex-col-reverse lg:flex-row items-center gap-8 lg:gap-16">
           <div className="flex-1 text-center lg:text-left">
-            <p className="text-muted-foreground mb-2">Research Engineer</p>
+            <p className="text-muted-foreground mb-2">Researcher</p>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4" data-testid="text-hero-name">
               Hello I'm<br />
               <span className="text-primary">{personalInfo.name}</span>
@@ -31,7 +31,7 @@ export function HeroSection() {
                 asChild
                 data-testid="button-download-cv"
               >
-                <a href="/attached_assets/4._Wang_Ruisi_CV_1765355476686.pdf" download>
+                <a href="/attached_assets/Wang_Ruisi_CV.pdf" download>
                   <FileText className="mr-2 h-4 w-4" />
                   Download CV
                 </a>
@@ -77,6 +77,7 @@ export function HeroSection() {
             <div className="relative">
               <div className="absolute inset-0 rounded-full border-2 border-dashed border-primary/30 animate-[spin_20s_linear_infinite]" style={{ width: "calc(100% + 24px)", height: "calc(100% + 24px)", left: "-12px", top: "-12px" }} />
               <Avatar className="w-48 h-48 md:w-64 md:h-64 lg:w-72 lg:h-72 border-4 border-primary/20">
+                <AvatarImage src="/attached_assets/photo.jpg" alt={personalInfo.name} />
                 <AvatarFallback className="text-4xl md:text-5xl lg:text-6xl font-semibold bg-primary/10 text-primary">
                   RW
                 </AvatarFallback>

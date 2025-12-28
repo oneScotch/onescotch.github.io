@@ -5,7 +5,7 @@ import { GraduationCap, Briefcase, Award } from "lucide-react";
 
 export function CVSection() {
   return (
-    <section id="cv" className="py-16 md:py-24">
+    <section id="cv" className="py-10 md:py-14">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         <h2 className="text-3xl md:text-4xl font-bold mb-8" data-testid="text-section-cv">
           Curriculum Vitae
@@ -67,6 +67,9 @@ export function CVSection() {
                           <div>
                             <span className="text-sm font-medium">{award.title}</span>
                             <span className="text-sm text-muted-foreground ml-2">({award.date})</span>
+                            {award.description && (
+                              <p className="text-sm text-muted-foreground">{award.description}</p>
+                            )}
                           </div>
                         </div>
                       ))}

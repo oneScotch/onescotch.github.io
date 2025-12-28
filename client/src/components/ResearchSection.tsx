@@ -24,7 +24,7 @@ function SmplIcon({ className }: { className?: string }) {
 
 export function ResearchSection() {
   return (
-    <section id="research" className="py-16 md:py-24">
+    <section id="research" className="py-10 md:py-14">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="text-section-research">
           Research

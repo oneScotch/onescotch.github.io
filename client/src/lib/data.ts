@@ -15,8 +15,12 @@ export const news = [
   {
     id: 1,
     date: "2025-12",
-    content: "Update on SenseNova-SI: SenseNova-SI-1.2-InternVL3-8B, larger-scale, achieve state-of-the-art performance among open-source models of comparable size across eight recent spatial intelligence benchmarks.",
-    link: null,
+    content: "Update on SenseNova-SI: SenseNova-SI-1.2-InternVL3-8B",
+    inlineLink: {
+      text: "SenseNova-SI-1.2-InternVL3-8B",
+      url: "https://huggingface.co/sensenova/SenseNova-SI-1.2-InternVL3-8B",
+    },
+    contentAfter: ", larger-scale, achieve state-of-the-art performance among open-source models of comparable size across eight recent spatial intelligence benchmarks: VSI, MMSI, MindCube, ViewSpatial, SITE, BLINK, 3DSRBench, EmbSpatial-Bench.",
   },
   {
     id: 2,
@@ -26,8 +30,8 @@ export const news = [
   },
   {
     id: 3,
-    date: "2025-01",
-    content: "SMPLest-X: Ultimate Scaling for Expressive Human Pose and Shape Estimation released on arXiv.",
+    date: "2025-10",
+    content: "SMPLest-X: Ultimate Scaling for Expressive Human Pose and Shape Estimation accepted to TPAMI 2025.",
     link: "https://arxiv.org/abs/2501.09782",
   },
   {
@@ -51,8 +55,13 @@ export const news = [
   {
     id: 7,
     date: "2023-06",
-    content: "Won 1st Place at HPC ISC2023 Student Cluster Competition, leading NTU team to beat 19 teams worldwide.",
+    content: "Won 1st Place in the Virtual ",
     link: null,
+    inlineLink: {
+      text: "HPC ISC2023 Student Cluster Competition",
+      url: "https://www.ntu.edu.sg/computing/news-events/news/detail/first-time-champions-in-the-virtual-isc-student-cluster-competition-in-the-isc23",
+    },
+    contentAfter: ", leading NTU team to beat 19 teams worldwide.",
   },
 ];
 
@@ -182,15 +191,17 @@ export const competitions = [
     description: "Led the NTU team to beat 19 teams worldwide. Built, maintained, and utilized supercomputers; applied optimization techniques to complete real-world scientific workloads.",
     type: "hpc",
     category: "hpc",
+    images: ["/attached_assets/competition_awards/2023_ISC_team_1.jpg", "/attached_assets/competition_awards/2023_ISC_team_2.jpg", "/attached_assets/competition_awards/2023_ISC_all.jpg"],
   },
   {
     id: 2,
     title: "HPC AI Innovation Challenge 2023",
-    achievement: "1st Runner-up",
+    achievement: "1st Place",
     date: "Jul 2024",
-    description: "Competed in high performance computing AI innovation challenge.",
+    description: "Competed in high performance computing AI innovation challenge. We also presented our winning solution at SCA2025 Supercomputing Asia.",
     type: "hpc",
     category: "ai",
+    images: ["/attached_assets/competition_awards/2023_hpcaic_sca25.jpg"],
   },
   {
     id: 3,
@@ -200,6 +211,7 @@ export const competitions = [
     description: "Proposed innovative solution to tackle mobility issues using quantum computing.",
     type: "hackathon",
     category: "quantum",
+    images: ["/attached_assets/competition_awards/2023_HFC_presentation.jpg"],
   },
   {
     id: 4,
@@ -209,6 +221,7 @@ export const competitions = [
     description: "Achieved second place overall and won best poster award at the international supercomputing competition.",
     type: "hpc",
     category: "hpc",
+    images: ["/attached_assets/competition_awards/2022_SC_team_1.jpg", "/attached_assets/competition_awards/2022_SC_team_2.jpg", "/attached_assets/competition_awards/2022_SC_all.jpg"],
   },
   {
     id: 5,
@@ -218,6 +231,7 @@ export const competitions = [
     description: "Competed in the International Supercomputing Conference for HPC, Networking, and Storage.",
     type: "hpc",
     category: "hpc",
+    images: [],
   },
   {
     id: 6,
@@ -227,6 +241,7 @@ export const competitions = [
     description: "Awarded first prize in province and second prize at national level.",
     type: "academic",
     category: "physics",
+    images: [],
   },
 ];
 
@@ -327,6 +342,5 @@ export const experience = [
 
 export const awards = [
   { title: "Dean's List - Computer Science", date: "Aug 2022", description: "Top 5% of cohort in academic performance" },
-  { title: "NTU President Research Scholar", date: "Jun 2022", description: "Accomplished with Merit in URECA Programme" },
-  { title: "Chinese Academy of Science 'Excellent Award'", date: "2018", description: "Comprehensive Scientific Research" },
+  { title: "NTU President Research Scholar", date: "Jun 2022", description: "Accomplished with Merit in Undergraduate Research Programme (URECA)." },
 ];

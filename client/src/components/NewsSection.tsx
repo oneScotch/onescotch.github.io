@@ -3,7 +3,7 @@ import { ExternalLink } from "lucide-react";
 
 export function NewsSection() {
   return (
-    <section id="news" className="py-16 md:py-24 bg-muted/30">
+    <section id="news" className="py-10 md:py-14 bg-muted/30">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="text-section-news">
           News
@@ -23,6 +23,20 @@ export function NewsSection() {
                 >
                   {item.content}
                 </a>
+              ) : item.inlineLink ? (
+                <span className="text-foreground">
+                  {item.content}
+                  <a
+                    href={item.inlineLink.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline"
+                    data-testid={`link-news-${item.id}`}
+                  >
+                    {item.inlineLink.text}
+                  </a>
+                  {item.contentAfter}
+                </span>
               ) : (
                 <span className="text-foreground">{item.content}</span>
               )}

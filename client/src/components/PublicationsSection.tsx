@@ -42,7 +42,7 @@ export function PublicationsSection() {
   };
 
   return (
-    <section id="publications" className="py-16 md:py-24 bg-muted/30">
+    <section id="publications" className="py-10 md:py-14 bg-muted/30">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
           <div>
@@ -88,12 +88,20 @@ export function PublicationsSection() {
               <CardContent className="p-0">
                 <div className="flex flex-col md:flex-row">
                   <div className="md:w-56 lg:w-64 flex-shrink-0 bg-muted/50">
-                    <div className="aspect-video md:aspect-[4/3] w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/5 p-4">
-                      <div className="text-center">
-                        <div className="text-2xl font-bold text-primary/40 mb-1">{pub.venue}</div>
-                        <div className="text-sm text-muted-foreground">{pub.year}</div>
+                    {pub.image ? (
+                      <img
+                        src={pub.image}
+                        alt={pub.title}
+                        className="aspect-video md:aspect-[4/3] w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="aspect-video md:aspect-[4/3] w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/5 p-4">
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-primary/40 mb-1">{pub.venue}</div>
+                          <div className="text-sm text-muted-foreground">{pub.year}</div>
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                   <div className="flex-1 p-4 md:p-5">
                     <div className="flex flex-wrap items-center gap-2 mb-2">
