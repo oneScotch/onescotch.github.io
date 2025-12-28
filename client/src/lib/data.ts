@@ -15,7 +15,7 @@ export const news = [
   {
     id: 1,
     date: "2025-12",
-    content: "Update on SenseNova-SI: SenseNova-SI-1.2-InternVL3-8B",
+    content: "Update on SenseNova-SI: ",
     inlineLink: {
       text: "SenseNova-SI-1.2-InternVL3-8B",
       url: "https://huggingface.co/sensenova/SenseNova-SI-1.2-InternVL3-8B",
