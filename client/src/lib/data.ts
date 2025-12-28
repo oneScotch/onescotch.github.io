@@ -191,7 +191,7 @@ export const competitions = [
     description: "Led the NTU team to beat 19 teams worldwide. Built, maintained, and utilized supercomputers; applied optimization techniques to complete real-world scientific workloads.",
     type: "hpc",
     category: "hpc",
-    images: ["/attached_assets/competition_awards/2023_ISC_team_1.jpg", "/attached_assets/competition_awards/2023_ISC_team_2.jpg", "/attached_assets/competition_awards/2023_ISC_all.jpg"],
+    images: ["/attached_assets/competition_awards/2023_ISC_team_1.jpeg", "/attached_assets/competition_awards/2023_ISC_team_2.jpg", "/attached_assets/competition_awards/2023_ISC_all.jpg"],
   },
   {
     id: 2,

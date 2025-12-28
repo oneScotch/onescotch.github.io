@@ -39,7 +39,7 @@ function ImageCarousel({ images, title }: { images: string[]; title: string }) {
       <img
         src={images[currentIndex]}
         alt={`${title} - Image ${currentIndex + 1}`}
-        className="w-full h-full object-cover transition-opacity duration-300"
+        className="w-full h-full object-contain bg-white transition-opacity duration-300"
       />
       {images.length > 1 && (
         <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">

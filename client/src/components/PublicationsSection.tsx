@@ -87,12 +87,12 @@ export function PublicationsSection() {
             <Card key={pub.id} className="hover-elevate overflow-hidden" data-testid={`card-publication-${pub.id}`}>
               <CardContent className="p-0">
                 <div className="flex flex-col md:flex-row">
-                  <div className="md:w-56 lg:w-64 flex-shrink-0 bg-muted/50">
+                  <div className="md:w-64 lg:w-80 flex-shrink-0 bg-white">
                     {pub.image ? (
                       <img
                         src={pub.image}
                         alt={pub.title}
-                        className="aspect-video md:aspect-[4/3] w-full h-full object-cover"
+                        className="aspect-video md:aspect-[4/3] w-full h-full object-contain bg-white"
                       />
                     ) : (
                       <div className="aspect-video md:aspect-[4/3] w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/5 p-4">
