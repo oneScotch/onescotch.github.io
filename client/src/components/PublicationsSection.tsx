@@ -3,8 +3,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { publications, personalInfo } from "@/lib/data";
-import { ExternalLink, FileText, ArrowUpRight, ArrowDownAZ, Calendar, Star } from "lucide-react";
+import { ExternalLink, FileText, ArrowUpRight, ArrowDownAZ, Calendar, Star, RefreshCw } from "lucide-react";
 import { SiGithub } from "react-icons/si";
+import { useCitations } from "@/hooks/use-citations";
 
 type SortOption = "default" | "citations" | "year";
 
@@ -16,18 +17,24 @@ const sortOptions = [
 
 export function PublicationsSection() {
   const [sortBy, setSortBy] = useState<SortOption>("default");
+  const { getCitations, isLoading: citationsLoading } = useCitations(publications);
 
   const sortedPublications = useMemo(() => {
-    const pubs = publications.map((p, idx) => ({ ...p, originalIndex: idx }));
+    const pubs = publications.map((p, idx) => ({ 
+      ...p, 
+      originalIndex: idx,
+      // Use live citations from Semantic Scholar, fallback to static data
+      liveCitations: getCitations(p.arxiv, p.citations)
+    }));
     switch (sortBy) {
       case "citations":
-        return [...pubs].sort((a, b) => b.citations - a.citations);
+        return [...pubs].sort((a, b) => b.liveCitations - a.liveCitations);
       case "year":
         return [...pubs].sort((a, b) => b.year - a.year);
       default:
         return [...pubs].sort((a, b) => a.originalIndex - b.originalIndex);
     }
-  }, [sortBy]);
+  }, [sortBy, getCitations]);
 
   const highlightAuthor = (authors: string[]) => {
     return authors.map((author, idx) => {
@@ -108,9 +115,10 @@ export function PublicationsSection() {
                       <Badge variant="secondary" className="font-mono text-xs">
                         {pub.venue}
                       </Badge>
-                      {pub.citations > 0 && (
+                      {pub.liveCitations > 0 && (
                         <Badge variant="outline" className="text-xs">
-                          {pub.citations} citations
+                          {citationsLoading && <RefreshCw className="h-3 w-3 mr-1 animate-spin" />}
+                          {pub.liveCitations} citations
                         </Badge>
                       )}
                     </div>
