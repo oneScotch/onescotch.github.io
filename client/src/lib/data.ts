@@ -2,7 +2,7 @@ export const personalInfo = {
   name: "Ruisi Wang",
   affiliation: "SenseTime Research",
   university: "NTU Computer Science",
-  email: "C200210@e.ntu.edu.sg",
+  email: "C200210[at]e.ntu.edu.sg",
   phone: "+65 91315875",
   tagline: "Computer Vision | Motion Capture | 3D Human Pose Estimation | High Performance Computing",
   bio: "I am a Researcher at SenseTime Research, interested in High Performance Computing, Motion Capture, 3D Human Pose Estimation, and Multimodal Models. I graduated with Honours (Highest Distinction) from Nanyang Technological University with a Bachelor of Engineering in Computer Science and a Minor in Mathematics.",
