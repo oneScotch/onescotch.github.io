@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,9 +8,15 @@ import { personalInfo } from "@/lib/data";
 import { Mail, Send, CheckCircle } from "lucide-react";
 import { SiGithub, SiLinkedin, SiGooglescholar } from "react-icons/si";
 import { useToast } from "@/hooks/use-toast";
+import emailjs from "@emailjs/browser";
+
+const EMAILJS_SERVICE_ID = "service_am5fdbx";
+const EMAILJS_TEMPLATE_ID = "template_k8hhab9";
+const EMAILJS_PUBLIC_KEY = "vgRLrjToi_4NyTICO";
 
 export function ContactSection() {
   const { toast } = useToast();
+  const formRef = useRef<HTMLFormElement>(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -23,21 +29,39 @@ export function ContactSection() {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // todo: remove mock functionality - implement real form submission via Formspree
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    
-    console.log("Contact form submitted:", formData);
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    toast({
-      title: "Message sent!",
-      description: "Thank you for reaching out. I'll get back to you soon.",
-    });
-    
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({ name: "", email: "", message: "" });
-    }, 3000);
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          message: formData.message,
+          to_email: personalInfo.email,
+        },
+        EMAILJS_PUBLIC_KEY
+      );
+      
+      setIsSubmitted(true);
+      toast({
+        title: "Message sent!",
+        description: "Thank you for reaching out. I'll get back to you soon.",
+      });
+      
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setFormData({ name: "", email: "", message: "" });
+      }, 3000);
+    } catch (error) {
+      console.error("EmailJS error:", error);
+      toast({
+        title: "Failed to send message",
+        description: "Please try again or email me directly at " + personalInfo.email,
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const socialLinks = [
