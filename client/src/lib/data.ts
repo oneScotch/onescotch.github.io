@@ -5,7 +5,7 @@ export const personalInfo = {
   email: "C200210@e.ntu.edu.sg",
   phone: "+65 91315875",
   tagline: "Computer Vision | Motion Capture | 3D Human Pose Estimation | High Performance Computing",
-  bio: "I am a Research Engineer at SenseTime Research, specializing in computer vision, motion capture, and 3D human pose estimation. I graduated with Honours (Highest Distinction) from Nanyang Technological University with a Bachelor of Engineering in Computer Science and a Minor in Mathematics.",
+  bio: "I am a Researcher at SenseTime Research, interested in High Performance Computing, Motion Capture, 3D Human Pose Estimation, and Multimodal Models. I graduated with Honours (Highest Distinction) from Nanyang Technological University with a Bachelor of Engineering in Computer Science and a Minor in Mathematics.",
   googleScholar: "https://scholar.google.com/citations?user=4r07QUQAAAAJ&hl=en",
   linkedin: "https://www.linkedin.com/in/ruisi-wang-105737220/",
   github: "https://github.com/open-mmlab/mmhuman3d",
