@@ -87,7 +87,7 @@ export function PublicationsSection() {
             <Card key={pub.id} className="hover-elevate overflow-hidden" data-testid={`card-publication-${pub.id}`}>
               <CardContent className="p-0">
                 <div className="flex flex-col md:flex-row">
-                  <div className="md:w-64 lg:w-80 flex-shrink-0 bg-white">
+                  <div className="md:w-64 lg:w-100 flex-shrink-0 bg-white">
                     {pub.image ? (
                       <img
                         src={pub.image}
