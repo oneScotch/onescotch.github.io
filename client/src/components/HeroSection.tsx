@@ -12,7 +12,7 @@ export function HeroSection() {
   ];
 
   return (
-    <section id="about" className="pt-24 pb-16 md:pt-32 md:pb-24">
+    <section id="about" className="pt-16 pb-16 md:pt-24 md:pb-24">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         <div className="flex flex-col-reverse lg:flex-row items-center gap-8 lg:gap-16">
           <div className="flex-1 text-center lg:text-left">
