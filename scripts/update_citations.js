@@ -18,11 +18,15 @@ function extractArxivId(url) {
 async function getCitationCount(arxivId) {
   const url = `https://api.semanticscholar.org/graph/v1/paper/arXiv:${arxivId}?fields=citationCount`;
   try {
-    const response = await axios.get(url);
-    return response.data.citationCount || 0;
+    const response = await axios.get(url, {
+      headers: process.env.SEMANTIC_SCHOLAR_API_KEY
+        ? { 'x-api-key': process.env.SEMANTIC_SCHOLAR_API_KEY }
+        : undefined,
+    });
+    return { count: response.data.citationCount || 0 };
   } catch (e) {
-    console.error(`Failed to fetch for arXiv:${arxivId}:`, e.message || e);
-    return null;
+    const status = e.response?.status || null;
+    return { count: null, status, error: e.message || String(e) };
   }
 }
 
@@ -30,7 +34,11 @@ async function getCitationCountByTitle(title) {
   const q = encodeURIComponent(title);
   const url = `https://api.semanticscholar.org/graph/v1/paper/search?query=${q}&limit=5&fields=title,externalIds,citationCount`;
   try {
-    const response = await axios.get(url);
+    const response = await axios.get(url, {
+      headers: process.env.SEMANTIC_SCHOLAR_API_KEY
+        ? { 'x-api-key': process.env.SEMANTIC_SCHOLAR_API_KEY }
+        : undefined,
+    });
     const results = response.data.data || [];
     if (!results.length) return null;
     const normalize = (s) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -43,14 +51,17 @@ async function getCitationCountByTitle(title) {
       }
     }
     // fallback to first result
-    return results[0].citationCount || 0;
+    return { count: results[0].citationCount || 0 };
   } catch (e) {
-    console.error(`Search failed for title: ${title}:`, e.message || e);
-    return null;
+    const status = e.response?.status || null;
+    return { count: null, status, error: e.message || String(e) };
   }
 }
 
 async function main() {
+  if (!process.env.SEMANTIC_SCHOLAR_API_KEY) {
+    console.warn('Warning: SEMANTIC_SCHOLAR_API_KEY not set — requests may be rate-limited.');
+  }
   let data = await fs.promises.readFile(DATA_PATH, 'utf8');
   const pubArrayMatch = data.match(/export const publications = \[([\s\S]*?)\n\];/);
   if (!pubArrayMatch) throw new Error('Publications array not found');
@@ -64,30 +75,55 @@ async function main() {
     const blockBody = match[1];
     const titleMatch = blockBody.match(/title:\s*"([^"]+)"/);
     const arxivMatch = blockBody.match(/arxiv:\s*"([^"]+)"/);
+    const idMatch = blockBody.match(/id:\s*(\d+)/);
+    const citationsMatch = blockBody.match(/citations:\s*(\d+)/);
     const title = titleMatch ? titleMatch[1] : null;
     const arxivUrl = arxivMatch ? arxivMatch[1] : null;
     const arxivId = arxivUrl ? extractArxivId(arxivUrl) : null;
-    blocks.push({ fullBlock, title, arxivId });
+    const id = idMatch ? Number(idMatch[1]) : null;
+    const oldCitations = citationsMatch ? Number(citationsMatch[1]) : null;
+    blocks.push({ fullBlock, title, arxivId, id, oldCitations });
   }
 
   // Delay between API requests to avoid rate limiting.
   const DELAY_MS = Number(process.env.SEMANTIC_SCHOLAR_DELAY_MS) || 1000;
   const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
 
+  const statuses = [];
+  let updated = 0, skipped = 0, failed = 0, rateLimited = 0;
   for (const b of blocks) {
-    let count = null;
+    let res = { count: null, status: null, error: null };
+    let method = b.arxivId ? 'arXiv' : (b.title ? 'title' : 'none');
     if (b.arxivId) {
-      count = await getCitationCount(b.arxivId);
+      res = await getCitationCount(b.arxivId);
     } else if (b.title) {
-      count = await getCitationCountByTitle(b.title);
+      res = await getCitationCountByTitle(b.title);
     }
-    if (count === null) {
+    const timestamp = new Date().toISOString();
+    if (res.count === null) {
+      failed += 1;
+      if (res.status === 429) rateLimited += 1;
+      const entry = { id: b.id, title: b.title, method, old: b.oldCitations, new: null, status: 'failed', statusCode: res.status || null, error: res.error || null, time: timestamp };
+      statuses.push(entry);
+      console.log(`FAILED [${entry.id ?? '-'}] ${entry.title ?? '<no title>'} via ${entry.method}: status=${entry.statusCode ?? 'unknown'} error=${entry.error ?? 'none'}`);
       await sleep(DELAY_MS);
       continue;
     }
-    const newBlock = b.fullBlock.replace(/citations:\s*\d+/, `citations: ${count}`);
+    const newBlock = b.fullBlock.replace(/citations:\s*\d+/, `citations: ${res.count}`);
     publicationsStr = publicationsStr.replace(b.fullBlock, newBlock);
+    const entry = { id: b.id, title: b.title, method, old: b.oldCitations, new: res.count, status: 'updated', statusCode: null, time: timestamp };
+    statuses.push(entry);
+    updated += 1;
+    console.log(`UPDATED [${entry.id ?? '-'}] ${entry.title ?? '<no title>'} via ${entry.method}: ${entry.old ?? 0} -> ${entry.new}`);
     await sleep(DELAY_MS);
+  }
+
+  // write status file
+  try {
+    const STATUS_PATH = path.join(__dirname, 'citation_status.json');
+    await fs.promises.writeFile(STATUS_PATH, JSON.stringify({ updated, failed, rateLimited, items: statuses }, null, 2), 'utf8');
+  } catch (e) {
+    console.error('Failed to write status file:', e.message || e);
   }
 
   const newData = data.replace(/export const publications = \[[\s\S]*?\n\];/, `export const publications = [${publicationsStr}\n];`);

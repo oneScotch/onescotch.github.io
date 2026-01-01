@@ -111,7 +111,7 @@ export const publications = [
     authors: ["Z Cai", "R Wang", "C Gu", "F Pu", "J Xu", "Y Wang", "W Yin", "Z Yang", "C Wei", "Q Sun", "et al."],
     venue: "arXiv 2025",
     year: 2025,
-    citations: 1,
+    citations: 0,
     type: "preprint",
     description: "State-of-the-art multimodal foundation model for spatial intelligence benchmarks.",
     image: "/attached_assets/paper_teasers/2025_sensenova-si.png",

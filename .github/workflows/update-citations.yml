@@ -16,15 +16,25 @@ jobs:
         with:
           node-version: '18'
       - name: Install dependencies
-        run: npm install axios
+        run: |
+          npm install
+        # optionally install just axios: npm install axios
       - name: Run citation update script
         run: node scripts/update_citations.js
+        env:
+          SEMANTIC_SCHOLAR_API_KEY: ${{ secrets.SEMANTIC_SCHOLAR_API_KEY }}
+          SEMANTIC_SCHOLAR_DELAY_MS: ${{ vars.SEMANTIC_SCHOLAR_DELAY_MS }}
       - name: Commit and push changes
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add client/src/lib/data.ts
-          git commit -m 'chore: update citation counts [auto]'
-          git push
+          # commit only if there are changes
+          if ! git diff --cached --quiet; then
+            git commit -m 'chore: update citation counts [auto]'
+            git push
+          else
+            echo "No changes to commit"
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
