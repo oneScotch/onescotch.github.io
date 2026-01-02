@@ -23,7 +23,6 @@ export function PublicationsSection() {
     const pubs = publications.map((p, idx) => ({ 
       ...p, 
       originalIndex: idx,
-      // Use live citations from Semantic Scholar, fallback to static data
       liveCitations: getCitations(p.arxiv, p.citations)
     }));
     switch (sortBy) {

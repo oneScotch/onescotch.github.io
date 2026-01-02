@@ -13,10 +13,10 @@ import { VirtualToc } from "@/components/VirtualToc";
 export default function Home() {
   return (
     <div className="min-h-screen bg-background">
-      <div className="max-w-[1400px] mx-auto px-4 lg:px-6">
+      <div className="max-w-[1600px] mx-auto px-4 lg:px-6">
         <div className="lg:flex lg:items-start lg:gap-8">
           <TableOfContents />
-          <main className="flex-1 lg:min-w-[50rem] max-w-4xl">
+          <main className="flex-1 lg:min-w-[50rem]">
             <HeroSection />
             <NewsSection />
             <CVSection />

@@ -101,7 +101,7 @@ export function CompetitionsSection() {
           })}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 md:auto-rows-fr">
           {filteredCompetitions.map((comp) => {
             const Icon = typeIcons[comp.type] || Trophy;
             const achievementClass = Object.entries(achievementStyles).find(([key]) => 
@@ -113,12 +113,12 @@ export function CompetitionsSection() {
             return (
               <div 
                 key={comp.id} 
-                className={`${hasImages ? "group [perspective:1000px]" : ""}`}
+                className={`${hasImages ? "group [perspective:1000px]" : ""} flex`}
                 data-testid={`card-competition-${comp.id}`}
               >
-                <div className={`relative ${hasImages ? "transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]" : ""}`}>
+                <div className={`relative w-full ${hasImages ? "transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]" : ""}`}>
                   {/* Front of card */}
-                  <Card className={`hover-elevate ${hasImages ? "[backface-visibility:hidden]" : ""}`}>
+                  <Card className={`hover-elevate h-full ${hasImages ? "[backface-visibility:hidden]" : ""}`}>
                     <CardContent className="p-4 md:p-6">
                       <div className="flex items-start gap-4">
                         <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-muted flex items-center justify-center">
@@ -147,7 +147,7 @@ export function CompetitionsSection() {
 
                   {/* Back of card (images carousel) */}
                   {hasImages && (
-                    <Card className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] overflow-hidden">
+                    <Card className="absolute inset-0 h-full [backface-visibility:hidden] [transform:rotateY(180deg)] overflow-hidden">
                       <div className="relative w-full h-full">
                         <ImageCarousel images={comp.images} title={comp.title} />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent pointer-events-none" />
