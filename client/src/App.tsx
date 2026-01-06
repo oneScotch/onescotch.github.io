@@ -1,6 +1,7 @@
 import { Switch, Route } from "wouter";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { Menubar } from "@/components/Menubar";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 
@@ -17,7 +18,10 @@ function App() {
   return (
     <TooltipProvider>
       <Toaster />
-      <Router />
+      <Menubar />
+      <div className="pt-16">
+        <Router />
+      </div>
     </TooltipProvider>
   );
 }
