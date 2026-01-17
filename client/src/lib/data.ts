@@ -123,7 +123,7 @@ export const publications = [
     authors: ["J Lin", "R Wang", "J Lu", "Z Huang", "G Song", "A Zeng", "X Liu", "C Wei", "W Yin", "et al."],
     venue: "arXiv 2025",
     year: 2025,
-    citations: 2,
+    citations: 3,
     type: "preprint",
     description: "Comprehensive study on generalizable motion generation including data, model architecture, and evaluation methods.",
     image: "/attached_assets/paper_teasers/2025_ViMoGen.jpg",
