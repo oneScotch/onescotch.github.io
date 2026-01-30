@@ -159,7 +159,7 @@ export const publications = [
     authors: ["Z Cai", "J Jiang", "Z Qing", "X Guo", "M Zhang", "Z Lin", "H Mei", "C Wei", "R Wang", "et al."],
     venue: "CVPR 2024",
     year: 2024,
-    citations: 46,
+    citations: 47,
     type: "conference",
     description: "Creating autonomous 3D digital humans with social intelligence capabilities for realistic virtual interactions.",
     image: "/attached_assets/paper_teasers/2024_digitallifeproject.png",
