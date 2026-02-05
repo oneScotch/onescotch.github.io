@@ -173,7 +173,7 @@ export const publications = [
     authors: ["W Yin", "Z Cai", "R Wang", "F Wang", "C Wei", "H Mei", "W Xiao", "Z Yang", "Q Sun", "et al."],
     venue: "ECCV 2024",
     year: 2024,
-    citations: 28,
+    citations: 29,
     type: "conference",
     description: "A framework for jointly estimating human models (SMPL-X) and camera poses from monocular video, using depth cues from human motion.",
     image: "/attached_assets/paper_teasers/2024_whac.jpg",
