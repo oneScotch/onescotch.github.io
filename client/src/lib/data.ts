@@ -147,7 +147,7 @@ export const publications = [
     authors: ["W Yin", "Z Cai", "R Wang", "A Zeng", "C Wei", "Q Sun", "H Mei", "Y Wang", "HE Pang", "et al."],
     venue: "TPAMI 2025",
     year: 2025,
-    citations: 17,
+    citations: 18,
     type: "journal",
     description: "Scaling expressive human pose and shape estimation with large-scale training data and improved architectures.",
     image: "/attached_assets/paper_teasers/2025_smplestx.png",
