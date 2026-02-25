@@ -135,7 +135,7 @@ export const publications = [
     authors: ["Z Cai", "Y Wang", "Q Sun", "R Wang", "C Gu", "W Yin", "Z Lin", "Z Yang", "C Wei", "X Shi", "et al."],
     venue: "arXiv 2025",
     year: 2025,
-    citations: 2,
+    citations: 3,
     type: "preprint",
     description: "Comprehensive evaluation of spatial reasoning capabilities in large language models and multimodal systems.",
     image: "/attached_assets/paper_teasers/2025_easi.png",
