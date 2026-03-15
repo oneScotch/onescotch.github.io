@@ -18,15 +18,34 @@ jobs:
         with:
           node-version: 20
           cache: npm
+
+      # Build main site
       - run: npm ci
       - run: npm run build
+
+      # Build demystifying_video_reasoning subpage
+      - name: Install subpage dependencies
+        run: npm install
+        working-directory: subpages/demystifying_video_reasoning
+      - name: Build subpage
+        run: npm run build
+        working-directory: subpages/demystifying_video_reasoning
+
+      # Merge subpage into main dist
+      - name: Copy subpage into dist
+        run: cp -r subpages/demystifying_video_reasoning/dist dist/demystifying_video_reasoning
+
       - name: Create CNAME
         run: cp CNAME dist/CNAME
-      - name: Verify subpage assets
+
+      - name: Verify build output
         run: |
-          echo "Checking demystifying_video_reasoning subpage..."
+          echo "Main site:"
+          ls -la dist/
+          echo ""
+          echo "Subpage:"
           ls -la dist/demystifying_video_reasoning/
-          ls -la dist/demystifying_video_reasoning/assets/
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
