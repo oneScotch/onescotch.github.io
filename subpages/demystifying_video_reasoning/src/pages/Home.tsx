@@ -254,11 +254,15 @@ export default function Home() {
       <section className="pb-16 px-6">
         <div className="max-w-5xl mx-auto">
           <div className="rounded-2xl overflow-hidden border border-gray-200 shadow-lg bg-gradient-to-b from-gray-950 to-gray-900 p-4 md:p-8">
-            <img
-              src={`${BASE}cos-diagram.png`}
-              alt="Chain-of-Steps diagram showing how video reasoning emerges along diffusion denoising steps, illustrated with a maze-solving example"
-              className="w-full h-auto rounded-lg"
-            />
+            <div className="relative w-full aspect-video rounded-lg overflow-hidden">
+              <iframe
+                src="https://www.youtube.com/embed/ML-ISULMMJU"
+                title="Chain-of-Steps: Demystifying Video Reasoning"
+                className="absolute inset-0 w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
             <p className="text-center text-gray-400 text-sm mt-4 leading-relaxed max-w-3xl mx-auto">
               <strong className="text-gray-300">Chain-of-Steps.</strong> Video reasoning occurs along the diffusion steps: the model explores
               multiple possible solutions simultaneously at early steps, gradually prunes suboptimal choices,
