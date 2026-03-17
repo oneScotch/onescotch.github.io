@@ -384,25 +384,61 @@ export default function Home() {
                 videoSrc="sample_videos/multi_path1.mp4"
                 title="Robot Navigation"
                 description="The robot simultaneously explores both upper and lower routes through the maze. As denoising proceeds, the lower path becomes dominant while the alternative gradually disappears."
-                caption="Early steps show dual pathways; final steps converge to optimal route"
+                caption="The robot drives to the white paper area"
               />
               <VideoCard
                 videoSrc="sample_videos/multi_path2.mp4"
                 title="Tic-Tac-Toe Strategy"
-                description="The model considers two possible placements of the 'O' piece simultaneously before committing to the winning move at later denoising steps."
-                caption="Multiple candidate moves explored before final decision"
+                description="The model considers two possible placements of the 'O' piece simultaneously before committing to the final decision at later denoising steps."
+                caption="The robot drives to the white paper area"
               />
               <VideoCard
                 videoSrc="sample_videos/multi_path3.mp4"
-                title="Plant Placement"
+                title="Object Movement"
                 description="Multiple candidate end positions for the plant are considered in early steps, with the model converging on the correct shelf position."
-                caption="Object placement with spatial reasoning"
+                caption="Place the green plant on the far left of the same tier to left"
               />
               <VideoCard
                 videoSrc="sample_videos/multi_path4.mp4"
-                title="Diamond Finding"
-                description="The model simultaneously selects multiple diamond shapes in early steps before identifying and highlighting the correct one."
-                caption="Visual search with elimination"
+                title="Diamond Detection"
+                description="The model initially marks two candidate shapes that might satisfy the query. Through iterative refinement, the incorrect candidate fades."
+                caption="Find the diamond in the figure"
+              />
+              <VideoCard
+                videoSrc="sample_videos/multi_path5.mp4"
+                title="Swap shapes"
+                description="The model initially considers whether the blue circle should move left or right."
+                caption="Swap the third and fourth shapes"
+              />
+              <VideoCard
+                videoSrc="sample_videos/multi_path6.mp4"
+                title="Remove shapes"
+                description="For the topmost square, the model initially plan three routes: up, left, and right, and gradually eliminate them in the later diffusion steps, converging to a single path."
+                caption="Remove the shapes one by one from top to bottom"
+              />
+              <VideoCard
+                videoSrc="sample_videos/multi_path7.mp4"
+                title="Traverse the tree"
+                description="The model initially performs an explicit BFS on the tree, eventually converging to a single path."
+                caption="Traverse from the root to find the red node"
+              />
+              <VideoCard
+                videoSrc="sample_videos/multi_path8.mp4"
+                title="Choose the largest sector"
+                description="The model initially choose the two larger sectors below, but ultimately compare and choose the left sector to be larger."
+                caption="Choose the largest sector of the pie chart"
+              />
+              <VideoCard
+                videoSrc="sample_videos/multi_path9.mp4"
+                title="Choose the rectangle with max red points"
+                description="The model first selects the rectangle with more dots, and subsequently eliminate the wrong one in later diffusion steps. It is worth noting that the circle drawn by the model initially was significantly different from the final one."
+                caption="Choose the rectangle containing the maximum number of red points"
+              />
+              <VideoCard
+                videoSrc="sample_videos/multi_path10.mp4"
+                title="Select the largest number"
+                description="The model initially selects the two largest numbers, both starting with 9. After comparison, it selects the larger one."
+                caption="Select the largest number"
               />
             </CategorySection>
 
@@ -415,15 +451,27 @@ export default function Home() {
             >
               <VideoCard
                 videoSrc="sample_videos/superposition1.mp4"
-                title="Pattern Completion"
-                description="Large and small circles overlap with each other in early steps as the model explores different sizes that could complete the pattern."
-                caption="Overlapping candidate shapes resolve into correct answer"
+                title="Size Pattern Completion"
+                description='The size-pattern follows a repeating "large-medium-small" pattern. When predicting the next element, the model initially generates overlapping circles of different sizes, representing competing hypotheses about the correct continuation of the sequence.'
+                caption="Complete the box according to the pattern"
               />
               <VideoCard
                 videoSrc="sample_videos/superposition2.mp4"
                 title="Rotation Prediction"
                 description="All possible rotations of the L-shaped object are superimposed in early steps, with the correct 90-degree rotation emerging as the dominant answer."
-                caption="Multiple rotation hypotheses simultaneously evaluated"
+                caption="Imitate the rotation pattern"
+              />
+              <VideoCard
+                videoSrc="sample_videos/superposition3.mp4"
+                title="Rotation Prediction"
+                description="The arrow gradually converged from a blurred rotational superposition state to a clear direction."
+                caption="Imitate the rotation pattern"
+              />
+              <VideoCard
+                videoSrc="sample_videos/superposition4.mp4"
+                title="Rotate and Move"
+                description="The model initially turned the two shapes on the left into a superposition state, and then moved the state to the right. Only then did it gradually clarify how they should rotate."
+                caption="Move and rotate the shapes on the left into the dashed frame on the right"
               />
             </CategorySection>
 
@@ -438,13 +486,37 @@ export default function Home() {
                 videoSrc="sample_videos/memory1.mp4"
                 title="Object Reappearance"
                 description="The model preserves an object's initial position throughout diffusion steps, enabling a circle to return to its original location consistently."
-                caption="Position memory retained across full denoising trajectory"
+                caption="Move the center object out of the frame and back"
               />
               <VideoCard
                 videoSrc="sample_videos/memory2.mp4"
                 title="Teddy Bear Relocation"
                 description="During movement, a large teddy bear temporarily occludes a smaller one. Despite this, early diffusion steps retain the state of the hidden bear to ensure consistent generation."
-                caption="Object permanence maintained through occlusion"
+                caption="Move the largest teddy bear to the left"
+              />
+              <VideoCard
+                videoSrc="sample_videos/memory3.mp4"
+                title="Shape Alignment"
+                description="The model initially preserves the initial shape locations and the movement trajectories."
+                caption="Move the shapes on the left into the dashed frame on the right"
+              />
+              <VideoCard
+                videoSrc="sample_videos/memory4.mp4"
+                title="Sorting Bookshelf"
+                description="While sorting the books, the model keeps the orignal height information."
+                caption="Insert the blue rectangle on the left, keeping it in ascending order as much as possible"
+              />
+              <VideoCard
+                videoSrc="sample_videos/memory5.mp4"
+                title="Circle Tangency"
+                description="The model keeps the original radius information."
+                caption="Align the two circles centrally until they are mutually tangent"
+              />
+              <VideoCard
+                videoSrc="sample_videos/memory6.mp4"
+                title="Sorting Stars"
+                description="During sorting, all initial size and location information is preserved."
+                caption="Sort the stars by size in non-descending order"
               />
             </CategorySection>
 
@@ -453,19 +525,55 @@ export default function Home() {
               number="04"
               title="Self-Correction & Enhancement"
               subtitle="Backtracking and Refinement During Generation"
-              description='The model exhibits stochastic "aha moments" — initially selecting incorrect options but revising its reasoning after a few diffusion steps. This is analogous to internal backtracking in long-thinking LLMs. Corrections happen globally across all frames simultaneously, not sequentially.'
+              description='The model exhibits stochastic "aha moments" — initially selecting incorrect options or incomplete information but revising its reasoning after a few diffusion steps. This is analogous to internal backtracking in long-thinking LLMs. Corrections happen globally across all frames simultaneously, not sequentially.'
             >
               <VideoCard
                 videoSrc="sample_videos/self_correction1.mp4"
-                title="Ball Trajectory Prediction"
+                title="Hit Target After Bounce"
                 description="Initially incomplete and ambiguous, the ball's trajectory is gradually completed as diffusion progresses, converging from four candidate landing points to the single correct one."
-                caption="Progressive trajectory refinement through denoising"
+                caption="Predict where the ball will bounce"
               />
               <VideoCard
                 videoSrc="sample_videos/self_correction2.mp4"
                 title="3D Shape Rotation"
                 description="At the first diffusion step, rotated cubes have incorrect quantities and arrangements. Over subsequent steps, the model self-corrects both the number and spatial configuration."
-                caption="Structural error correction across multiple denoising steps"
+                caption="Rotate the shape 180° clockwise in the top view"
+              />
+              <VideoCard
+                videoSrc="sample_videos/self_correction3.mp4"
+                title="Maximize Path Sum in Maze"
+                description="The model initially performs a BFS-like exploration. From the early outputs, it appears to prefer moving right first and then down, but it gradually discovers the correct path over time."
+                caption="Maximize path sum for the yellow circle from green to red via the shortest route"
+              />
+              <VideoCard
+                videoSrc="sample_videos/self_correction4.mp4"
+                title="Solve the Maze"
+                description="The yellow dot clearly moves upward in the 0th step, but by the 4th step the model revises its decision and instead moves right and then up, passing through the yellow square."
+                caption="Move the yellow circle from green to red via three intermediate yellow cells"
+              />
+              <VideoCard
+                videoSrc="sample_videos/self_correction5.mp4"
+                title="Color Pattern Completion"
+                description="As the diffusion steps progress, the model gradually changes the color of the answer."
+                caption="Infer the fifth square based on color pattern"
+              />
+              <VideoCard
+                videoSrc="sample_videos/self_correction6.mp4"
+                title="Mirror Reflection"
+                description="The path for placing the cup initially appears to emerge from the mirror; however, in later steps it instead appears from the top."
+                caption="Place a glass of water in front of the mirror"
+              />
+              <VideoCard
+                videoSrc="sample_videos/self_correction7.mp4"
+                title="Ball Bounce Prediction"
+                description="As time progresses, the trajectory of the small ball becomes increasingly clear, more definite, and also longer."
+                caption="Predict the trajectory of the pinball"
+              />
+              <VideoCard
+                videoSrc="sample_videos/self_correction8.mp4"
+                title="Group Integration"
+                description="At the beginning, the model only plans the path and the number of groups remains fixed at four. However, as the diffusion process continues, the model is no longer satisfied with merely finding a correct path and begins to consider increasing the number of circles."
+                caption="Integrate red, orange, green, and blue groups in sequence"
               />
             </CategorySection>
 
@@ -478,15 +586,15 @@ export default function Home() {
             >
               <VideoCard
                 videoSrc="sample_videos/understanding1.mp4"
-                title="Car Repair Task"
+                title="Car Movement"
                 description="Early diffusion steps identify the car as the object of interest, while later steps introduce motion and simulate physical interactions to 'get the car running'."
-                caption="Object identification precedes action reasoning"
+                caption="Get the car running"
               />
               <VideoCard
                 videoSrc="sample_videos/understanding2.mp4"
-                title="House Correction"
+                title="Door Correction"
                 description="Early steps recognize the door as the target object that is incorrect. Later steps then manipulate it to correct the structural error."
-                caption="Scene understanding enables targeted correction"
+                caption="Correct the incorrect parts of the house"
               />
             </CategorySection>
           </div>
