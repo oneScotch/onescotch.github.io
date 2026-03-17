@@ -202,7 +202,7 @@ export default function Home() {
       <section className="pt-20 pb-16 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 leading-[1.1] mb-6 tracking-tight">
-            Demystifying<br />Video Reasoning
+            Demystifying Video Reasoning
           </h1>
           <p className="text-lg md:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed mb-10">
             Reasoning in video generation models happens along <em className="text-gray-800 font-medium not-italic">diffusion steps</em>, not frames.
@@ -257,20 +257,23 @@ export default function Home() {
           <p className="text-sm uppercase tracking-[0.2em] text-purple-500 font-medium mb-4">Abstract</p>
           <div className="text-gray-600 leading-[1.85] text-[17px] space-y-4">
             <p>
-              Recent advances in video generation have revealed an unexpected capability: diffusion-based video models
-              can perform reasoning through <strong className="text-gray-800">Chain-of-Frame (CoF)</strong>, suggesting that reasoning
-              unfolds sequentially across video frames. In this work, we revisit this assumption and uncover a different mechanism.
-            </p>
-            <p>
-              Through systematic analysis, we show that video reasoning primarily develops along the
-              <strong className="text-gray-800"> diffusion denoising steps</strong> instead, validated through qualitative
-              analysis and probing tests. We term this mechanism <strong className="text-gray-800">Chain-of-Steps (CoS)</strong>.
-            </p>
-            <p>
-              Our investigation reveals several intriguing emergent behaviors critical for video reasoning:
-              models exhibit <strong className="text-gray-800">long-horizon memory</strong> for tasks like object permanence,
-              can <strong className="text-gray-800">self-correct</strong> intermediate mistakes during generation, and show
-              <strong className="text-gray-800"> layer-wise functional specialization</strong> within the Diffusion Transformer architecture.
+              Recent advances in video generation have revealed an unexpected phenomenon: diffusion-based video models
+              exhibit non-trivial reasoning capabilities. Prior work attributes this to a Chain-of-Frames (CoF) mechanism,
+              where reasoning is assumed to unfold sequentially across video frames. In this work, we challenge this
+              assumption and uncover a fundamentally different mechanism. We show that reasoning in video models instead primarily emerges along the <em className="text-gray-800 not-italic font-medium">diffusion
+              denoising steps</em>. Through qualitative analysis and targeted probing experiments, we find that models explore
+              multiple candidate solutions in early denoising steps and progressively converge to a final answer, a process
+              we term <strong className="text-gray-800">Chain-of-Steps (CoS)</strong>. Beyond this core mechanism, we identify several emergent reasoning behaviors critical to model performance:
+              (1) <strong className="text-gray-800">working memory</strong>, enabling persistent reference;
+              (2) <strong className="text-gray-800">self-correction and enhancement</strong>, allowing recovery from incorrect
+              intermediate solutions; and (3) <strong className="text-gray-800">perception before action</strong>, where early
+              steps establish semantic grounding and later steps perform structured manipulation. During a diffusion step, we further uncover self-evolved <strong className="text-gray-800">functional
+              specialization</strong> within Diffusion Transformers, where early layers encode dense perceptual structure,
+              middle layers execute reasoning, and later layers consolidate latent representations. Motivated by these insights, we present a simple training-free strategy as a proof-of-concept, demonstrating
+              how reasoning can be improved by ensembling latent trajectories from identical models with different random seeds.
+              Overall, our work provides a systematic understanding of how reasoning emerges in video generation models,
+              offering a foundation to guide future research in better exploiting the inherent reasoning dynamics of video
+              models as a new substrate for intelligence.
             </p>
           </div>
         </div>
@@ -454,11 +457,11 @@ export default function Home() {
             </CategorySection>
 
             <CategorySection
-              id="memory"
+              id="working memory"
               number="03"
-              title="Memory"
+              title="Working Memory"
               subtitle="Persistent State Across Denoising Steps"
-              description="Reasoning requires maintaining memory or state. The diffusion process naturally establishes persistent anchors that preserve critical information across generation steps — crucial for tasks requiring long-horizon reference like object permanence."
+              description="Reasoning requires maintaining working memory or state. The diffusion process naturally establishes persistent anchors that preserve critical information across generation steps — crucial for tasks requiring long-horizon reference like object permanence."
             >
               <VideoCard
                 videoSrc="sample_videos/memory1.mp4"
@@ -556,11 +559,11 @@ export default function Home() {
             </CategorySection>
 
             <CategorySection
-              id="understanding"
+              id="perception before action"
               number="05"
-              title="Understanding Before Reasoning"
+              title="Perception Before Action"
               subtitle="Perception First, Then Logic"
-              description="The diffusion trajectory first addresses 'what' and 'where' in a scene before determining 'how' and 'why'. Early layers focus on dense perceptual grounding (separating foreground from background), while middle layers carry out the bulk of reasoning. This reveals a universal understanding-to-reasoning transition."
+              description="The diffusion trajectory first addresses 'what' and 'where' in a scene before determining 'how' and 'why'. Early layers focus on dense perceptual grounding (separating foreground from background), while middle layers carry out the bulk of reasoning. This reveals a universal 'perception before action' transition."
             >
               <VideoCard
                 videoSrc="sample_videos/understanding1.mp4"
