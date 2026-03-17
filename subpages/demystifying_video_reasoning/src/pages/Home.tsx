@@ -76,31 +76,12 @@ function CategorySection({ id, number, title, subtitle, description, children }:
 }
 
 const LAYER_VIZ_SLIDES = [
-  {
-    task: "Get the car running",
-    prompt: "Get the car running.",
-    description: "Early layers identify the car as the object of interest. Middle layers introduce motion planning. Late layers simulate physical interactions.",
-  },
-  {
-    task: "Correct the incorrect parts of the house",
-    prompt: "Correct the incorrect parts of the house.",
-    description: "Early layers ground the door as the target object. Subsequent layers manipulate it to fix the structural error.",
-  },
-  {
-    task: "Circle the bicycles in the image",
-    prompt: "Please circle the bicycles in the image.",
-    description: "First few layers focus on background. Middle layers (around L10–L21) shift attention to semantically relevant objects and encode decisive grounding information.",
-  },
-  {
-    task: "Solve the maze",
-    prompt: "Find a path from start to end.",
-    description: "Early layers lay out the full maze structure. Middle layers propagate path hypotheses. Late layers converge on the correct traversal.",
-  },
-  {
-    task: "Object reappearance",
-    prompt: "Return the circle to its original position.",
-    description: "The model preserves a persistent memory anchor of the initial object position across all layers throughout the denoising trajectory.",
-  },
+  { task: "Sorting Bookshelf", prompt: "Insert the blue rectangle on the left, keeping it in ascending order as much as possible.", image: "features/task1.png" },
+  { task: "Return to correct bin", prompt: "Move each item into the bin that matches its color.", image: "features/task2.png" },
+  { task: "Object Packing", prompt: "The scene shows objects on the left side and a container on the right side. Place the objects into the container one by one.", image: "features/task3.png" },
+  { task: "Traverse the Tree", prompt: "Traverse from the root to find the red node.", image: "features/task4.png" },
+  { task: "Solve the maze", prompt: "Move the agent from blue start square to the red end square along the shortest path without entering any cells marked with black X obstacles.", image: "features/task5.png" },
+  { task: "Hit Target After Bounce", prompt: "Predict where the ball will bounce.", image: "features/task6.png" },
 ];
 
 function LayerVisualizationSection() {
@@ -158,7 +139,7 @@ function LayerVisualizationSection() {
           <div className="relative select-none">
             <img
               key={current}
-              src={`${BASE}cos-diagram.png`}
+              src={`${BASE}${slide.image}`}
               alt={`Layer-wise token activation heatmap for: ${slide.task}`}
               className="w-full h-auto block"
               draggable={false}
@@ -184,9 +165,6 @@ function LayerVisualizationSection() {
             </button>
           </div>
 
-          <div className="px-5 py-4 border-t border-white/10">
-            <p className="text-sm text-gray-300 leading-relaxed">{slide.description}</p>
-          </div>
         </div>
 
         <div className="flex gap-1.5 justify-center mt-4">
