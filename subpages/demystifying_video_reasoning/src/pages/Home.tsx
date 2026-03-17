@@ -234,7 +234,7 @@ export default function Home() {
           <div className="rounded-2xl overflow-hidden border border-gray-200 shadow-lg bg-gradient-to-b from-gray-950 to-gray-900 p-3 md:p-5">
             <div className="relative w-full aspect-video rounded-lg overflow-hidden">
               <iframe
-                src="https://www.youtube.com/embed/ML-ISULMMJU?vq=hd1080"
+                src="https://www.youtube.com/embed/Gs9TPZmzo-s?vq=hd1080"
                 title="Chain-of-Steps: Demystifying Video Reasoning"
                 className="absolute inset-0 w-full h-full"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
