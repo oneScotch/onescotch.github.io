@@ -195,6 +195,7 @@ export default function Home() {
             <a href="#key-finding" className="hover:text-gray-900 transition-colors">Key Finding</a>
             <a href="#examples" className="hover:text-gray-900 transition-colors">Examples</a>
             <a href="#layer-viz" className="hover:text-gray-900 transition-colors">Visualization</a>
+            <a href="#citation" className="hover:text-gray-900 transition-colors">Citation</a>
           </div>
         </nav>
       </header>
@@ -208,10 +209,47 @@ export default function Home() {
             Reasoning in video generation models happens along <em className="text-gray-800 font-medium not-italic">diffusion steps</em>, not frames.
             We discover <span className="font-semibold text-gray-800">Chain-of-Steps</span> &mdash; a new understanding of how video models think.
           </p>
-          <div className="flex flex-wrap gap-3 justify-center mb-12">
+          <div className="flex flex-wrap gap-3 justify-center mb-8">
             <span className="px-3 py-1.5 text-xs font-medium bg-purple-50 text-purple-700 rounded-full border border-purple-100">Video Reasoning</span>
             <span className="px-3 py-1.5 text-xs font-medium bg-blue-50 text-blue-700 rounded-full border border-blue-100">Diffusion Models</span>
             <span className="px-3 py-1.5 text-xs font-medium bg-green-50 text-green-700 rounded-full border border-green-100">Emergent Intelligence</span>
+          </div>
+          <div className="flex flex-wrap gap-3 justify-center mb-12">
+            <a
+              href="https://arxiv.org/abs/2603.16870"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors"
+            >
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M4 2h5l3 3v9a1 1 0 01-1 1H4a1 1 0 01-1-1V3a1 1 0 011-1z" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M9 2v3h3" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              Paper
+            </a>
+            <a
+              href="https://huggingface.co/papers/2603.16870"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium bg-yellow-400 text-gray-900 rounded-lg hover:bg-yellow-300 transition-colors"
+            >
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M5.3 7.7c-.4 0-.7.3-.7.7s.3.7.7.7.7-.3.7-.7-.3-.7-.7-.7zm5.4 0c-.4 0-.7.3-.7.7s.3.7.7.7.7-.3.7-.7-.3-.7-.7-.7z"/>
+                <path d="M8 1a7 7 0 100 14A7 7 0 008 1zm3.7 9.3a3.7 3.7 0 01-7.4 0 .5.5 0 01.5-.5h6.4a.5.5 0 01.5.5zM4.6 7.2c0-.2.1-.4.2-.5.2-.2.4-.2.6-.1l.7.5.7-.5c.2-.1.4-.1.6.1.1.1.2.3.2.5l-.3 1c-.1.2-.2.3-.4.3h-1c-.2 0-.3-.1-.4-.3l-.3-1zm5 0c0-.2.1-.4.2-.5.2-.2.4-.2.6-.1l.7.5.7-.5c.2-.1.4-.1.6.1.1.1.2.3.2.5l-.3 1c-.1.2-.2.3-.4.3h-1c-.2 0-.3-.1-.4-.3l-.3-1z"/>
+              </svg>
+              Hugging Face
+            </a>
+            <a
+              href="https://youtu.be/Gs9TPZmzo-s"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium bg-red-600 text-white rounded-lg hover:bg-red-500 transition-colors"
+            >
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M14.2 4.5a1.8 1.8 0 00-1.3-1.3C11.8 3 8 3 8 3s-3.8 0-4.9.2a1.8 1.8 0 00-1.3 1.3C1.5 5.7 1.5 8 1.5 8s0 2.3.3 3.5c.2.7.7 1.1 1.3 1.3C4.2 13 8 13 8 13s3.8 0 4.9-.2c.6-.2 1.1-.6 1.3-1.3.3-1.2.3-3.5.3-3.5s0-2.3-.3-3.5zM6.5 10.2V5.8L10.2 8l-3.7 2.2z"/>
+              </svg>
+              Video
+            </a>
           </div>
           <a
             href="#abstract"
@@ -461,7 +499,7 @@ export default function Home() {
               number="03"
               title="Working Memory"
               subtitle="Persistent State Across Denoising Steps"
-              description="Reasoning requires maintaining working memory or state. The diffusion process naturally establishes persistent anchors that preserve critical information across generation steps — crucial for tasks requiring long-horizon reference like object permanence."
+              description="Reasoning requires maintaining working memory or state. The diffusion process naturally establishes persistent anchors that preserve critical information across generation steps — crucial for tasks requiring reference like object permanence."
             >
               <VideoCard
                 videoSrc="sample_videos/memory1.mp4"
@@ -563,19 +601,19 @@ export default function Home() {
               number="05"
               title="Perception Before Action"
               subtitle="Perception First, Then Logic"
-              description="The diffusion trajectory first addresses 'what' and 'where' in a scene before determining 'how' and 'why'. Early layers focus on dense perceptual grounding (separating foreground from background), while middle layers carry out the bulk of reasoning. This reveals a universal 'perception before action' transition."
+              description="The diffusion trajectory first addresses 'what' and 'where' in a scene before determining 'how' and 'why'. Early denoising steps focus on dense perceptual grounding (separating foreground from background), while subsequent steps carry out the bulk of reasoning or action. This reveals a universal 'perception before action' transition."
             >
               <VideoCard
                 videoSrc="sample_videos/understanding1.mp4"
-                title="Car Movement"
-                description="Early diffusion steps identify the car as the object of interest, while later steps introduce motion and simulate physical interactions to 'get the car running'."
-                caption="Get the car running"
-              />
-              <VideoCard
-                videoSrc="sample_videos/understanding2.mp4"
                 title="Door Correction"
                 description="Early steps recognize the door as the target object that is incorrect. Later steps then manipulate it to correct the structural error."
                 caption="Correct the incorrect parts of the house"
+              />
+              <VideoCard
+                videoSrc="sample_videos/understanding2.mp4"
+                title="Car Movement"
+                description="Early diffusion steps identify the car as the object of interest, while later steps introduce motion and simulate physical interactions to 'get the car running'."
+                caption="Get the car running"
               />
             </CategorySection>
           </div>
@@ -585,6 +623,45 @@ export default function Home() {
       <SectionDivider />
 
       <LayerVisualizationSection />
+
+      <SectionDivider />
+
+      <section id="citation" className="pb-16 px-6 scroll-mt-20">
+        <div className="max-w-3xl mx-auto">
+          <p className="text-sm uppercase tracking-[0.2em] text-purple-500 font-medium mb-4">Citation</p>
+          <h2 className="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
+            BibTeX
+          </h2>
+          <p className="text-gray-500 mb-6 leading-relaxed text-sm">
+            If you find this work useful, please cite our paper:
+          </p>
+          <div className="relative group">
+            <pre className="bg-gray-950 text-gray-300 text-xs md:text-sm leading-relaxed rounded-xl p-5 md:p-6 overflow-x-auto border border-gray-800 font-mono">
+{`@article{wang2026demystifing,
+  title={Demystifing Video Reasoning},
+  author={Wang, Ruisi and Cai, Zhongang and Pu, Fanyi and Xu, Junxiang and Yin, Wanqi and Wang, Maijunxian and Ji, Ran and Gu, Chenyang and Li, Bo and Huang, Ziqi and Deng, Hokin and Lin, Dahua and Liu, Ziwei and Yang, Lei},
+  journal={arXiv preprint arXiv:2603.16870},
+  year={2026}
+}`}
+            </pre>
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(
+`@article{wang2026demystifing,
+  title={Demystifing Video Reasoning},
+  author={Wang, Ruisi and Cai, Zhongang and Pu, Fanyi and Xu, Junxiang and Yin, Wanqi and Wang, Maijunxian and Ji, Ran and Gu, Chenyang and Li, Bo and Huang, Ziqi and Deng, Hokin and Lin, Dahua and Liu, Ziwei and Yang, Lei},
+  journal={arXiv preprint arXiv:2603.16870},
+  year={2026}
+}`
+                );
+              }}
+              className="absolute top-3 right-3 px-3 py-1.5 text-xs font-medium text-gray-400 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-colors"
+            >
+              Copy
+            </button>
+          </div>
+        </div>
+      </section>
 
       <footer className="border-t border-gray-100 py-8 px-6">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
