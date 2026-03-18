@@ -202,19 +202,20 @@ export default function Home() {
 
       <section className="pt-20 pb-16 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="relative max-w-7xl mx-auto mb-6">
+          <div className="relative inline-block mb-6">
             <img
               src={`${BASE}logo.jpg`}
               alt=""
-              className="absolute inset-0 w-full h-full object-contain opacity-30 pointer-events-none select-none"
+              className="absolute inset-0 w-full h-full object-contain opacity-15 pointer-events-none select-none"
               draggable={false}
             />
-            <div className="relative py-6">
-              <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 leading-[1.1] tracking-tight mb-6">
-                Demystifying Video Reasoning
-              </h1>
+            <h1 className="relative font-serif text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 leading-[1.1] tracking-tight py-4 px-6">
+              Demystifying Video Reasoning
+            </h1>
+          </div>
 
-              <div className="flex flex-wrap justify-center gap-x-1 gap-y-1 text-[15px] text-gray-700 max-w-3xl mx-auto">
+          <div className="mb-6">
+            <div className="flex flex-wrap justify-center gap-x-1 gap-y-1 text-[15px] text-gray-700 max-w-3xl mx-auto">
                 <span><a href="https://www.wruisi.com" target="_blank" rel="noopener noreferrer" className="hover:text-purple-600 transition-colors underline decoration-gray-300 hover:decoration-purple-400">Ruisi Wang</a><sup className="text-[10px] text-gray-400 ml-[1px]">1</sup>,</span>
                 <span><a href="https://caizhongang.com/" target="_blank" rel="noopener noreferrer" className="hover:text-purple-600 transition-colors underline decoration-gray-300 hover:decoration-purple-400">Zhongang Cai</a><sup className="text-[10px] text-gray-400 ml-[1px]">✉,1</sup>,</span>
                 <span><a href="https://pufanyi.com/" target="_blank" rel="noopener noreferrer" className="hover:text-purple-600 transition-colors underline decoration-gray-300 hover:decoration-purple-400">Fanyi Pu</a><sup className="text-[10px] text-gray-400 ml-[1px]">1,2</sup>,</span>
@@ -230,16 +231,15 @@ export default function Home() {
                 <span><a href="https://liuziwei7.github.io/" target="_blank" rel="noopener noreferrer" className="hover:text-purple-600 transition-colors underline decoration-gray-300 hover:decoration-purple-400">Ziwei Liu</a><sup className="text-[10px] text-gray-400 ml-[1px]">2</sup>,</span>
                 <span><a href="https://yanglei.me/" target="_blank" rel="noopener noreferrer" className="hover:text-purple-600 transition-colors underline decoration-gray-300 hover:decoration-purple-400">Lei Yang</a><sup className="text-[10px] text-gray-400 ml-[1px]">1</sup></span>
               </div>
-              <div className="mt-3 text-xs text-gray-400 leading-relaxed">
-                <span>✉ Corresponding Author</span>
-              </div>
-              <div className="mt-1.5 flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-gray-500">
-                <span><sup className="text-gray-400">1</sup> SenseTime Research</span>
-                <span><sup className="text-gray-400">2</sup> Nanyang Technological University</span>
-                <span><sup className="text-gray-400">3</sup> UC Berkeley</span>
-                <span><sup className="text-gray-400">4</sup> UC San Diego</span>
-                <span><sup className="text-gray-400">5</sup> Carnegie Mellon University</span>
-              </div>
+            <div className="mt-3 text-xs text-gray-400 leading-relaxed">
+              <span>✉ Corresponding Author</span>
+            </div>
+            <div className="mt-1.5 flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-gray-500">
+              <span><sup className="text-gray-400">1</sup> SenseTime Research</span>
+              <span><sup className="text-gray-400">2</sup> Nanyang Technological University</span>
+              <span><sup className="text-gray-400">3</sup> UC Berkeley</span>
+              <span><sup className="text-gray-400">4</sup> UC San Diego</span>
+              <span><sup className="text-gray-400">5</sup> Carnegie Mellon University</span>
             </div>
           </div>
 
