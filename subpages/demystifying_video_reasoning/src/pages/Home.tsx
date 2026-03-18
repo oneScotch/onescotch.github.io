@@ -214,12 +214,12 @@ export default function Home() {
             <span className="px-3 py-1.5 text-xs font-medium bg-blue-50 text-blue-700 rounded-full border border-blue-100">Diffusion Models</span>
             <span className="px-3 py-1.5 text-xs font-medium bg-green-50 text-green-700 rounded-full border border-green-100">Emergent Intelligence</span>
           </div>
-          <div className="flex flex-wrap gap-3 justify-center mb-12">
+          <div className="grid grid-cols-3 gap-3 mb-12">
             <a
               href="https://arxiv.org/abs/2603.16870"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors"
+              className="inline-flex items-center justify-center gap-2 py-2.5 text-sm font-medium bg-white text-purple-700 border border-purple-300 rounded-full hover:bg-purple-50 transition-colors"
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M4 2h5l3 3v9a1 1 0 01-1 1H4a1 1 0 01-1-1V3a1 1 0 011-1z" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round"/>
@@ -231,7 +231,7 @@ export default function Home() {
               href="https://huggingface.co/papers/2603.16870"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium bg-yellow-400 text-gray-900 rounded-lg hover:bg-yellow-300 transition-colors"
+              className="inline-flex items-center justify-center gap-2 py-2.5 text-sm font-medium bg-white text-purple-700 border border-purple-300 rounded-full hover:bg-purple-50 transition-colors"
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                 <path d="M5.3 7.7c-.4 0-.7.3-.7.7s.3.7.7.7.7-.3.7-.7-.3-.7-.7-.7zm5.4 0c-.4 0-.7.3-.7.7s.3.7.7.7.7-.3.7-.7-.3-.7-.7-.7z"/>
@@ -243,7 +243,7 @@ export default function Home() {
               href="https://youtu.be/Gs9TPZmzo-s"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium bg-red-600 text-white rounded-lg hover:bg-red-500 transition-colors"
+              className="inline-flex items-center justify-center gap-2 py-2.5 text-sm font-medium bg-white text-purple-700 border border-purple-300 rounded-full hover:bg-purple-50 transition-colors"
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                 <path d="M14.2 4.5a1.8 1.8 0 00-1.3-1.3C11.8 3 8 3 8 3s-3.8 0-4.9.2a1.8 1.8 0 00-1.3 1.3C1.5 5.7 1.5 8 1.5 8s0 2.3.3 3.5c.2.7.7 1.1 1.3 1.3C4.2 13 8 13 8 13s3.8 0 4.9-.2c.6-.2 1.1-.6 1.3-1.3.3-1.2.3-3.5.3-3.5s0-2.3-.3-3.5zM6.5 10.2V5.8L10.2 8l-3.7 2.2z"/>
@@ -636,7 +636,7 @@ export default function Home() {
             If you find this work useful, please cite our paper:
           </p>
           <div className="relative group">
-            <pre className="bg-gray-950 text-gray-300 text-xs md:text-sm leading-relaxed rounded-xl p-5 md:p-6 overflow-x-auto border border-gray-800 font-mono">
+            <pre className="bg-white text-gray-700 text-xs md:text-sm leading-relaxed rounded-xl p-5 md:p-6 overflow-x-auto border border-gray-200 font-mono">
 {`@article{wang2026demystifing,
   title={Demystifing Video Reasoning},
   author={Wang, Ruisi and Cai, Zhongang and Pu, Fanyi and Xu, Junxiang and Yin, Wanqi and Wang, Maijunxian and Ji, Ran and Gu, Chenyang and Li, Bo and Huang, Ziqi and Deng, Hokin and Lin, Dahua and Liu, Ziwei and Yang, Lei},
@@ -655,7 +655,7 @@ export default function Home() {
 }`
                 );
               }}
-              className="absolute top-3 right-3 px-3 py-1.5 text-xs font-medium text-gray-400 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-colors"
+              className="absolute top-3 right-3 px-3 py-1.5 text-xs font-medium text-gray-500 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg transition-colors"
             >
               Copy
             </button>
