@@ -202,17 +202,15 @@ export default function Home() {
 
       <section className="pt-20 pb-16 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="relative inline-block mb-6">
-            <img
-              src={`${BASE}logo.jpg`}
-              alt=""
-              className="absolute inset-0 w-full h-full object-contain opacity-15 pointer-events-none select-none"
-              draggable={false}
-            />
-            <h1 className="relative font-serif text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 leading-[1.1] tracking-tight py-4 px-6">
-              Demystifying Video Reasoning
-            </h1>
-          </div>
+          <img
+            src={`${BASE}logo.jpg`}
+            alt="Institution logos"
+            className="h-8 md:h-10 mx-auto mb-6 select-none"
+            draggable={false}
+          />
+          <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 leading-[1.1] tracking-tight mb-6">
+            Demystifying Video Reasoning
+          </h1>
 
           <div className="mb-6">
             <div className="flex flex-wrap justify-center gap-x-1 gap-y-1 text-[15px] text-gray-700 max-w-3xl mx-auto">
