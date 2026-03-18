@@ -205,7 +205,7 @@ export default function Home() {
           <img
             src={`${BASE}logo.jpg`}
             alt="Institution logos"
-            className="h-8 md:h-10 mx-auto mb-6 select-none"
+            className="w-full max-w-[600px] mx-auto mb-6 select-none"
             draggable={false}
           />
           <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 leading-[1.1] tracking-tight mb-6">
@@ -315,7 +315,7 @@ export default function Home() {
                 allowFullScreen
               />
             </div>
-            <p className="text-center text-gray-400 text-sm mt-4 leading-relaxed max-w-3xl mx-auto">
+            <p className="text-center text-gray-400 text-sm mt-4 leading-relaxed max-w-7xl mx-auto">
               <strong className="text-gray-300">Chain-of-Steps.</strong> Video reasoning occurs along the diffusion steps: the model explores
               multiple possible solutions simultaneously at early steps, gradually prunes suboptimal choices,
               and reaches a final decision at late steps. Different random seeds lead to diverse reasoning trajectories.
@@ -327,7 +327,7 @@ export default function Home() {
       <SectionDivider />
 
       <section id="abstract" ref={abstractRef} className="pb-16 px-6 scroll-mt-20">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <p className="text-sm uppercase tracking-[0.2em] text-purple-500 font-medium mb-4">Abstract</p>
           <div className="text-gray-600 leading-[1.85] text-[17px] space-y-4">
             <p>
@@ -356,7 +356,7 @@ export default function Home() {
       <SectionDivider />
 
       <section id="key-finding" className="pb-16 px-6 scroll-mt-20">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <p className="text-sm uppercase tracking-[0.2em] text-purple-500 font-medium mb-4">Key Finding</p>
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-8 leading-tight">
             Chain-of-Steps, not Chain-of-Frames
@@ -663,7 +663,7 @@ export default function Home() {
       <SectionDivider />
 
       <section id="citation" className="pb-16 px-6 scroll-mt-20">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <p className="text-sm uppercase tracking-[0.2em] text-purple-500 font-medium mb-4">Citation</p>
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
             BibTeX
