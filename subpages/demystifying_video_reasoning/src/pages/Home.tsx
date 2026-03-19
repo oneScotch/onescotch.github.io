@@ -443,15 +443,15 @@ export default function Home() {
               />
               <VideoCard
                 videoSrc="sample_videos/multi_path2.mp4"
-                title="Tic-Tac-Toe Strategy"
-                description="The model considers two possible placements of the 'O' piece simultaneously before committing to the final decision at later denoising steps."
-                caption="The robot drives to the white paper area"
-              />
-              <VideoCard
-                videoSrc="sample_videos/multi_path3.mp4"
                 title="Object Movement"
                 description="Multiple candidate end positions for the plant are considered in early steps, with the model converging on the correct shelf position."
                 caption="Place the green plant on the far left of the same tier to left"
+              />
+              <VideoCard
+                videoSrc="sample_videos/multi_path3.mp4"
+                title="Tic-Tac-Toe Strategy"
+                description="The model considers two possible placements of the 'O' piece simultaneously before committing to the final decision at later denoising steps."
+                caption="The robot drives to the white paper area"
               />
               <VideoCard
                 videoSrc="sample_videos/multi_path4.mp4"
@@ -549,7 +549,7 @@ export default function Home() {
                 description="During movement, a large teddy bear temporarily occludes a smaller one. Despite this, early diffusion steps retain the state of the hidden bear to ensure consistent generation."
                 caption="Move the largest teddy bear to the left"
               />
-              <VideoCard
+              {/* <VideoCard
                 videoSrc="sample_videos/memory3.mp4"
                 title="Shape Alignment"
                 description="The model initially preserves the initial shape locations and the movement trajectories."
@@ -572,7 +572,7 @@ export default function Home() {
                 title="Sorting Stars"
                 description="During sorting, all initial size and location information is preserved."
                 caption="Sort the stars by size in non-descending order"
-              />
+              /> */}
             </CategorySection>
 
             <CategorySection
