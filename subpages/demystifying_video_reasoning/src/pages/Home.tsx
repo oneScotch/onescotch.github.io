@@ -44,9 +44,9 @@ function VideoCard({ videoSrc, title, description, caption }: { videoSrc: string
         </video>
       </div>
       <div className="p-5">
-        <h4 className="font-semibold text-gray-900 text-base mb-1.5">{title}</h4>
+        <h4 className="font-semibold text-gray-900 text-base mb-1">{title}</h4>
+        {caption && <p className="text-xs text-gray-400 mb-1.5 italic">{caption}</p>}
         <p className="text-sm text-gray-600 leading-relaxed">{description}</p>
-        {caption && <p className="text-xs text-gray-400 mt-2 italic">{caption}</p>}
       </div>
     </div>
   );
