@@ -100,7 +100,7 @@ function LayerVisualizationSection() {
         <h2 className="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight">
           Layer-wise Token-Level Visualization
         </h2>
-        <p className="text-gray-500 max-w-2xl mb-10 leading-relaxed">
+        <p className="text-gray-500 max-w-5xl mb-10 leading-relaxed">
           We register forward hooks on the DiT transformer blocks and compute the L2 norm of hidden states
           at each spatial-temporal coordinate. Rows represent DiT layers (L0, L10 … L39); columns represent
           video frames. Each cell is a heatmap of activation energy, revealing how reasoning attention
@@ -433,7 +433,7 @@ export default function Home() {
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight">
             Emergent Reasoning Behaviors
           </h2>
-          <p className="text-gray-500 max-w-2xl mb-16 leading-relaxed">
+          <p className="text-gray-500 max-w-5xl mb-16 leading-relaxed">
             Through systematic analysis, we uncover several surprising emergent behaviors in video reasoning models
             that are critical for the success of video reasoning.
           </p>
@@ -462,7 +462,7 @@ export default function Home() {
                 videoSrc="sample_videos/multi_path3.mp4"
                 title="Tic-Tac-Toe Strategy"
                 description="The model considers two possible placements of the 'O' piece simultaneously before committing to the final decision at later denoising steps."
-                caption="The robot drives to the white paper area"
+                caption="Modify one 'O' to 'X' in Tic-Tac-Toe to secure a win"
               />
               <VideoCard
                 videoSrc="sample_videos/multi_path4.mp4"
