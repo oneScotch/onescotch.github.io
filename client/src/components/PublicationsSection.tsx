@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { publications, personalInfo } from "@/lib/data";
+import { publications, personalInfo, type AuthorEntry } from "@/lib/data";
 import { ExternalLink, FileText, ArrowUpRight, ArrowDownAZ, Calendar, Star, RefreshCw } from "lucide-react";
 import { SiGithub } from "react-icons/si";
 import { useCitations } from "@/hooks/use-citations";
@@ -35,12 +35,19 @@ export function PublicationsSection() {
     }
   }, [sortBy, getCitations]);
 
-  const highlightAuthor = (authors: string[]) => {
+  const highlightAuthor = (authors: AuthorEntry[]) => {
     return authors.map((author, idx) => {
-      const isMe = author.includes("R Wang") || author.includes("Ruisi");
+      const isMe = author.name.includes("Ruisi Wang");
+      const annotation = author.annotation ? (
+        <sup className="text-[10px] ml-[1px] text-muted-foreground">{author.annotation}</sup>
+      ) : null;
       return (
         <span key={idx}>
-          {isMe ? <span className="text-primary font-medium">{author}</span> : author}
+          {isMe ? (
+            <span className="text-primary font-medium">{author.name}{annotation}</span>
+          ) : (
+            <>{author.name}{annotation}</>
+          )}
           {idx < authors.length - 1 && ", "}
         </span>
       );
