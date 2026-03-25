@@ -194,7 +194,7 @@ export const publications = [
     citations: 1,
     type: "preprint",
     description: "A very big video reasoning suite including million-scale video dataset, rule-based benchmark, strong baseline model that enables systematic training and evaluation of reasoning capabilities of video models.",
-    image: "/attached_assets/paper_teasers/2026_VBVR.png",
+    image: "/attached_assets/paper_teasers/2026_VBVR.jpg",
     arxiv: "https://arxiv.org/abs/2602.20159",
     github: "https://github.com/Video-Reason/VBVR-EvalKit",
   },
