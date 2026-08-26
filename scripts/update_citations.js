@@ -12,24 +12,34 @@ const DATA_PATH = path.join(__dirname, '../client/src/lib/data.ts');
 const REQUEST_TIMEOUT_MS = 15_000;
 const MAX_REQUEST_ATTEMPTS = 3;
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+let apiKeyEnabled = Boolean(process.env.SEMANTIC_SCHOLAR_API_KEY);
 
 function apiHeaders() {
-  return process.env.SEMANTIC_SCHOLAR_API_KEY
+  return apiKeyEnabled
     ? { 'x-api-key': process.env.SEMANTIC_SCHOLAR_API_KEY }
     : undefined;
 }
 
-async function semanticScholarGet(url) {
+async function semanticScholarRequest(config) {
   let lastError;
   for (let attempt = 1; attempt <= MAX_REQUEST_ATTEMPTS; attempt += 1) {
     try {
-      return await axios.get(url, {
+      return await axios({
+        ...config,
         headers: apiHeaders(),
         timeout: REQUEST_TIMEOUT_MS,
       });
     } catch (error) {
       lastError = error;
       const status = error.response?.status || null;
+
+      if ((status === 401 || status === 403) && apiKeyEnabled) {
+        apiKeyEnabled = false;
+        attempt -= 1;
+        console.warn('::warning title=Semantic Scholar API key rejected::Retrying without the configured API key. Replace or remove the SEMANTIC_SCHOLAR_API_KEY secret.');
+        continue;
+      }
+
       const retryable = status === null || status === 429 || status >= 500;
       if (!retryable || attempt === MAX_REQUEST_ATTEMPTS) break;
 
@@ -49,14 +59,23 @@ function extractArxivId(url) {
   return match ? match[1].replace(/v\d+$/, '') : null;
 }
 
-async function getCitationCount(arxivId) {
-  const url = `https://api.semanticscholar.org/graph/v1/paper/arXiv:${arxivId}?fields=citationCount`;
+async function getCitationCounts(arxivIds) {
+  const url = 'https://api.semanticscholar.org/graph/v1/paper/batch?fields=citationCount';
   try {
-    const response = await semanticScholarGet(url);
-    return { count: response.data.citationCount ?? 0 };
+    const response = await semanticScholarRequest({
+      method: 'post',
+      url,
+      data: { ids: arxivIds.map((id) => `ARXIV:${id}`) },
+    });
+    return arxivIds.map((_, index) => {
+      const paper = response.data[index];
+      return paper
+        ? { count: paper.citationCount ?? 0 }
+        : { count: null, status: 404, error: 'Paper not found by arXiv ID' };
+    });
   } catch (e) {
     const status = e.response?.status || null;
-    return { count: null, status, error: e.message || String(e) };
+    return arxivIds.map(() => ({ count: null, status, error: e.message || String(e) }));
   }
 }
 
@@ -64,7 +83,7 @@ async function getCitationCountByTitle(title) {
   const q = encodeURIComponent(title);
   const url = `https://api.semanticscholar.org/graph/v1/paper/search?query=${q}&limit=5&fields=title,externalIds,citationCount`;
   try {
-    const response = await semanticScholarGet(url);
+    const response = await semanticScholarRequest({ method: 'get', url });
     const results = response.data.data || [];
     if (!results.length) {
       return { count: null, status: 404, error: 'No Semantic Scholar results found' };
@@ -129,13 +148,20 @@ async function main() {
 
   const statuses = [];
   let updated = 0, failed = 0, rateLimited = 0;
+  const arxivBlocks = blocks.filter((block) => block.arxivId);
+  const arxivResults = await getCitationCounts(arxivBlocks.map((block) => block.arxivId));
+  const resultByArxivId = new Map(
+    arxivBlocks.map((block, index) => [block.arxivId, arxivResults[index]]),
+  );
+
   for (const b of blocks) {
     let res = { count: null, status: null, error: null };
     let method = b.arxivId ? 'arXiv' : (b.title ? 'title' : 'none');
     if (b.arxivId) {
-      res = await getCitationCount(b.arxivId);
+      res = resultByArxivId.get(b.arxivId);
     } else if (b.title) {
       res = await getCitationCountByTitle(b.title);
+      await sleep(DELAY_MS);
     }
     const timestamp = new Date().toISOString();
     if (res.count === null) {
@@ -144,7 +170,6 @@ async function main() {
       const entry = { id: b.id, title: b.title, method, old: b.oldCitations, new: null, status: 'failed', statusCode: res.status || null, error: res.error || null, time: timestamp };
       statuses.push(entry);
       console.log(`FAILED [${entry.id ?? '-'}] ${entry.title ?? '<no title>'} via ${entry.method}: status=${entry.statusCode ?? 'unknown'} error=${entry.error ?? 'none'}`);
-      await sleep(DELAY_MS);
       continue;
     }
     const newBlock = b.fullBlock.replace(/citations:\s*\d+/, `citations: ${res.count}`);
@@ -153,7 +178,6 @@ async function main() {
     statuses.push(entry);
     updated += 1;
     console.log(`UPDATED [${entry.id ?? '-'}] ${entry.title ?? '<no title>'} via ${entry.method}: ${entry.old ?? 0} -> ${entry.new}`);
-    await sleep(DELAY_MS);
   }
 
   console.log(`Citation update summary: ${updated} updated, ${failed} failed (${rateLimited} rate-limited).`);
@@ -168,6 +192,13 @@ async function main() {
 
   const newData = data.replace(/export const publications = \[[\s\S]*?\r?\n\];/, `export const publications = [${publicationsStr}\n];`);
   await fs.promises.writeFile(DATA_PATH, newData, 'utf8');
+
+  if (updated === 0 && failed > 0) {
+    throw new Error(`Citation update failed: all ${failed} lookups failed; no citation data was changed.`);
+  }
+  if (failed > 0) {
+    console.warn(`::warning title=Partial citation update::${failed} citation lookups failed; successful counts were still updated.`);
+  }
   console.log('Updated citation counts.');
 }
 

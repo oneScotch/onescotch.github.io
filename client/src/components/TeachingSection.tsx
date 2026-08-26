@@ -1,5 +1,5 @@
 import { professionalService } from "@/lib/data";
-import { Mic, Users, GraduationCap } from "lucide-react";
+import { BookOpen, Mic, Users, GraduationCap } from "lucide-react";
 
 export function TeachingSection() {
   return (
@@ -10,6 +10,23 @@ export function TeachingSection() {
         </h2>
 
         <div className="space-y-6">
+          <div>
+            <div className="flex items-center gap-2 mb-3">
+              <BookOpen className="h-5 w-5 text-primary" />
+              <h3 className="font-semibold text-lg">Reviewing:</h3>
+            </div>
+            <ul className="space-y-2 ml-7">
+              {professionalService.reviewers.map((item) => (
+                <li key={item.id} data-testid={`reviewer-${item.id}`}>
+                  <span className="text-foreground">· {item.title}</span>
+                  {item.description && (
+                    <span className="text-muted-foreground"> - {item.description}</span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+
           <div>
             <div className="flex items-center gap-2 mb-3">
               <Mic className="h-5 w-5 text-primary" />
