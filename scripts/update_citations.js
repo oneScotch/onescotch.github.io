@@ -9,21 +9,51 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const DATA_PATH = path.join(__dirname, '../client/src/lib/data.ts');
+const REQUEST_TIMEOUT_MS = 15_000;
+const MAX_REQUEST_ATTEMPTS = 3;
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+function apiHeaders() {
+  return process.env.SEMANTIC_SCHOLAR_API_KEY
+    ? { 'x-api-key': process.env.SEMANTIC_SCHOLAR_API_KEY }
+    : undefined;
+}
+
+async function semanticScholarGet(url) {
+  let lastError;
+  for (let attempt = 1; attempt <= MAX_REQUEST_ATTEMPTS; attempt += 1) {
+    try {
+      return await axios.get(url, {
+        headers: apiHeaders(),
+        timeout: REQUEST_TIMEOUT_MS,
+      });
+    } catch (error) {
+      lastError = error;
+      const status = error.response?.status || null;
+      const retryable = status === null || status === 429 || status >= 500;
+      if (!retryable || attempt === MAX_REQUEST_ATTEMPTS) break;
+
+      const retryAfter = Number(error.response?.headers?.['retry-after']);
+      const delay = Number.isFinite(retryAfter) && retryAfter > 0
+        ? Math.min(retryAfter * 1000, 30_000)
+        : 2000 * (2 ** (attempt - 1));
+      console.warn(`Semantic Scholar request failed (${status ?? error.code ?? 'network error'}); retrying in ${delay}ms.`);
+      await sleep(delay);
+    }
+  }
+  throw lastError;
+}
 
 function extractArxivId(url) {
-  const match = url.match(/arxiv\.org\/abs\/([^\s\/]+)(v\d+)?/);
-  return match ? match[1] : null;
+  const match = url.match(/arxiv\.org\/abs\/([^/?#\s]+)/);
+  return match ? match[1].replace(/v\d+$/, '') : null;
 }
 
 async function getCitationCount(arxivId) {
   const url = `https://api.semanticscholar.org/graph/v1/paper/arXiv:${arxivId}?fields=citationCount`;
   try {
-    const response = await axios.get(url, {
-      headers: process.env.SEMANTIC_SCHOLAR_API_KEY
-        ? { 'x-api-key': process.env.SEMANTIC_SCHOLAR_API_KEY }
-        : undefined,
-    });
-    return { count: response.data.citationCount || 0 };
+    const response = await semanticScholarGet(url);
+    return { count: response.data.citationCount ?? 0 };
   } catch (e) {
     const status = e.response?.status || null;
     return { count: null, status, error: e.message || String(e) };
@@ -34,24 +64,22 @@ async function getCitationCountByTitle(title) {
   const q = encodeURIComponent(title);
   const url = `https://api.semanticscholar.org/graph/v1/paper/search?query=${q}&limit=5&fields=title,externalIds,citationCount`;
   try {
-    const response = await axios.get(url, {
-      headers: process.env.SEMANTIC_SCHOLAR_API_KEY
-        ? { 'x-api-key': process.env.SEMANTIC_SCHOLAR_API_KEY }
-        : undefined,
-    });
+    const response = await semanticScholarGet(url);
     const results = response.data.data || [];
-    if (!results.length) return null;
+    if (!results.length) {
+      return { count: null, status: 404, error: 'No Semantic Scholar results found' };
+    }
     const normalize = (s) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
     const target = normalize(title);
     // Try to find exact/close match
     for (const r of results) {
       if (!r.title) continue;
       if (normalize(r.title) === target || normalize(r.title).startsWith(target) || target.startsWith(normalize(r.title))) {
-        return r.citationCount || 0;
+        return { count: r.citationCount ?? 0 };
       }
     }
     // fallback to first result
-    return { count: results[0].citationCount || 0 };
+    return { count: results[0].citationCount ?? 0 };
   } catch (e) {
     const status = e.response?.status || null;
     return { count: null, status, error: e.message || String(e) };
@@ -63,16 +91,18 @@ async function main() {
     console.warn('Warning: SEMANTIC_SCHOLAR_API_KEY not set — requests may be rate-limited.');
   }
   let data = await fs.promises.readFile(DATA_PATH, 'utf8');
-  const pubArrayMatch = data.match(/export const publications = \[([\s\S]*?)\n\];/);
+  const pubArrayMatch = data.match(/export const publications = \[([\s\S]*?)\r?\n\];/);
   if (!pubArrayMatch) throw new Error('Publications array not found');
   let publicationsStr = pubArrayMatch[1];
 
-  const pubRegex = /{([\s\S]*?)\}\s*,?/g;
+  // Publication entries are indented by two spaces. Anchoring both braces at
+  // that level avoids stopping at nested objects such as author entries.
+  const pubRegex = /^  \{[\s\S]*?^  \}(?=,?\r?$)/gm;
   let match;
   const blocks = [];
   while ((match = pubRegex.exec(publicationsStr)) !== null) {
-    const fullBlock = match[0].endsWith(',') ? match[0].slice(0, -1) : match[0];
-    const blockBody = match[1];
+    const fullBlock = match[0];
+    const blockBody = fullBlock;
     const titleMatch = blockBody.match(/title:\s*"([^"]+)"/);
     const arxivMatch = blockBody.match(/arxiv:\s*"([^"]+)"/);
     const idMatch = blockBody.match(/id:\s*(\d+)/);
@@ -82,15 +112,23 @@ async function main() {
     const arxivId = arxivUrl ? extractArxivId(arxivUrl) : null;
     const id = idMatch ? Number(idMatch[1]) : null;
     const oldCitations = citationsMatch ? Number(citationsMatch[1]) : null;
+    if (id === null || oldCitations === null || (!arxivId && !title)) {
+      throw new Error(`Invalid publication entry near id ${id ?? '<unknown>'}`);
+    }
     blocks.push({ fullBlock, title, arxivId, id, oldCitations });
   }
+  if (!blocks.length) throw new Error('No publication entries found');
 
   // Delay between API requests to avoid rate limiting.
-  const DELAY_MS = Number(process.env.SEMANTIC_SCHOLAR_DELAY_MS) || 1000;
-  const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
+  const delaySetting = process.env.SEMANTIC_SCHOLAR_DELAY_MS;
+  const configuredDelay = Number(delaySetting);
+  const DELAY_MS = delaySetting !== undefined && delaySetting !== ''
+    && Number.isFinite(configuredDelay) && configuredDelay >= 0
+    ? configuredDelay
+    : 1000;
 
   const statuses = [];
-  let updated = 0, skipped = 0, failed = 0, rateLimited = 0;
+  let updated = 0, failed = 0, rateLimited = 0;
   for (const b of blocks) {
     let res = { count: null, status: null, error: null };
     let method = b.arxivId ? 'arXiv' : (b.title ? 'title' : 'none');
@@ -118,6 +156,8 @@ async function main() {
     await sleep(DELAY_MS);
   }
 
+  console.log(`Citation update summary: ${updated} updated, ${failed} failed (${rateLimited} rate-limited).`);
+
   // write status file
   try {
     const STATUS_PATH = path.join(__dirname, 'citation_status.json');
@@ -126,7 +166,7 @@ async function main() {
     console.error('Failed to write status file:', e.message || e);
   }
 
-  const newData = data.replace(/export const publications = \[[\s\S]*?\n\];/, `export const publications = [${publicationsStr}\n];`);
+  const newData = data.replace(/export const publications = \[[\s\S]*?\r?\n\];/, `export const publications = [${publicationsStr}\n];`);
   await fs.promises.writeFile(DATA_PATH, newData, 'utf8');
   console.log('Updated citation counts.');
 }

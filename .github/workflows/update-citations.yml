@@ -8,23 +8,27 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: update-citations
+  cancel-in-progress: false
+
 jobs:
   update-citations:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v7
         with:
           persist-credentials: true
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v7
         with:
-          node-version: '18'
+          node-version: '24'
+          cache: npm
       - name: Install dependencies
-        run: |
-          npm install
-        # optionally install just axios: npm install axios
+        run: npm ci
       - name: Run citation update script
         run: node scripts/update_citations.js
         env:

@@ -5,13 +5,34 @@ export const personalInfo = {
   email: "C200210@e.ntu.edu.sg",
   phone: "+65 91315875",
   tagline: "Computer Vision | Motion Capture | 3D Human Pose Estimation | High Performance Computing",
-  bio: "I am a Researcher at SenseTime Research, interested in High Performance Computing, Motion Capture, 3D Human Pose Estimation, and Multimodal Models. I graduated with Honours (Highest Distinction) from Nanyang Technological University with a Bachelor of Engineering in Computer Science and a Minor in Mathematics. 🌟I am open for discussion/collaborations about spatial intelligence and video reasoning. If you think there is anything interesting we can discuss, feel free to email me!",
+  bio: "I am a Researcher at SenseTime Research, interested in High Performance Computing, Multimodal Models and Visual Reasoning. I graduated with Honours (Highest Distinction) from Nanyang Technological University with a Bachelor of Engineering in Computer Science and a Minor in Mathematics. 🌟I am hoping to pursue a PhD starting in Fall 2027 and would be grateful for opportunities to learn from and work with researchers in spatial intelligence and visual reasoning. I am also always happy to discuss ideas or potential collaborations in these areas. If you think there might be something interesting to explore together, please feel free to reach out!",
   googleScholar: "https://scholar.google.com/citations?user=4r07QUQAAAAJ&hl=en",
   linkedin: "https://www.linkedin.com/in/ruisi-wang-105737220/",
-  github: "https://github.com/open-mmlab/mmhuman3d",
 };
 
 export const news = [
+  {
+    id: 12,
+    date: "2026-06-18",
+    content: "Thrilled to share that our paper, ",
+    link: null,
+    inlineLink: {
+      text: "Demystify Video Reasoning",
+      url: "https://www.wruisi.com/demystifying_video_reasoning/",
+    },
+    contentAfter: ", has been accepted to ECCV 2026! See you in Malmö, Sweden!",
+  },
+  {
+    id: 12,
+    date: "2026-05-01",
+    content: "Excited to share that our paper, ",
+    link: null,
+    inlineLink: {
+      text: "A Very Big Video Reasoning Suite",
+      url: "https://video-reason.com/",
+    },
+    contentAfter: ", has been accepted to ICML 2026!",
+  },
   {
     id: 11,
     date: "2026-03-25",
@@ -142,8 +163,8 @@ export const researchThemes = [
   },
   {
     id: 6,
-    title: "Video Reasoning",
-    description: "Temporal understanding and reasoning over video content.",
+    title: "Visual Reasoning",
+    description: "Temporal understanding and reasoning over visual content.",
     icon: "Video",
   },
 ];
@@ -161,14 +182,14 @@ export const publications = [
       { name: "Bo Li" }, { name: "Ziqi Huang" }, { name: "Hokin Deng" }, { name: "Dahua Lin" },
       { name: "Ziwei Liu" }, { name: "Lei Yang" },
     ] as AuthorEntry[],
-    venue: "arXiv 2026",
+    venue: "ECCV 2026",
     year: 2026,
     citations: 0,
-    type: "preprint",
+    type: "conference",
     description: "Reasoning in video generation models happens along diffusion steps, not frames. We discover Chain-of-Steps — a new understanding of how video models think.",
     image: "/attached_assets/paper_teasers/2026_demystifying.jpg",
     arxiv: "https://arxiv.org/abs/2603.16870",
-    github: "https://www.wruisi.com/demystifying_video_reasoning/",
+    website: "https://www.wruisi.com/demystifying_video_reasoning/",
   },
   {
     id: 7,
@@ -189,13 +210,14 @@ export const publications = [
       { name: "Bo Li" }, { name: "Dahua Lin" }, { name: "Ziwei Liu" }, { name: "Vikash Kumar" },
       { name: "Yijiang Li" }, { name: "Lei Yang" }, { name: "Zhongang Cai", annotation: "✉" }, { name: "Hokin Deng", annotation: "✉" },
     ] as AuthorEntry[],
-    venue: "arXiv 2026",
+    venue: "ICML 2026",
     year: 2026,
     citations: 1,
-    type: "preprint",
+    type: "conference",
     description: "A very big video reasoning suite including million-scale video dataset, rule-based benchmark, strong baseline model that enables systematic training and evaluation of reasoning capabilities of video models.",
     image: "/attached_assets/paper_teasers/2026_VBVR.jpg",
     arxiv: "https://arxiv.org/abs/2602.20159",
+    website: "https://video-reason.com/",
     github: "https://github.com/Video-Reason/VBVR-EvalKit",
   },
   {
@@ -214,7 +236,7 @@ export const publications = [
     venue: "CVPR 2026",
     year: 2025,
     citations: 8,
-    type: "preprint",
+    type: "conference",
     description: "State-of-the-art multimodal foundation model for spatial intelligence benchmarks.",
     image: "/attached_assets/paper_teasers/2025_sensenova-si.png",
     arxiv: "https://arxiv.org/abs/2511.13719",
@@ -232,7 +254,7 @@ export const publications = [
     venue: "ICLR 2026",
     year: 2025,
     citations: 6,
-    type: "preprint",
+    type: "conference",
     description: "Comprehensive study on generalizable motion generation including data, model architecture, and evaluation methods.",
     image: "/attached_assets/paper_teasers/2025_ViMoGen.jpg",
     arxiv: "https://arxiv.org/abs/2510.26794",
@@ -377,6 +399,18 @@ export const competitions = [
 ];
 
 export const professionalService = {
+  reviewers: [
+    {
+      id: 1,
+      title: "Reviewer for the International Journal of Computer Vision (IJCV)",
+      description: "",
+    },
+    {
+      id: 2,
+      title: "Reviewer for multiple academic conferences including NeurIPS, ICLR, ICML, etc.",
+      description: "",
+    },
+  ],
   talks: [
     {
       id: 1,

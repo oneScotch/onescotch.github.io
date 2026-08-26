@@ -152,6 +152,14 @@ export function PublicationsSection() {
                       </p>
                     )}
                     <div className="flex flex-wrap items-center gap-2">
+                      {pub.website && (
+                        <Button variant="outline" size="sm" asChild>
+                          <a href={pub.website} target="_blank" rel="noopener noreferrer">
+                            <ExternalLink className="h-4 w-4 mr-1" />
+                            Website
+                          </a>
+                        </Button>
+                      )}
                       {pub.github && (
                         <Button variant="outline" size="sm" asChild>
                           <a href={pub.github} target="_blank" rel="noopener noreferrer">
