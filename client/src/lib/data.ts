@@ -309,7 +309,7 @@ export const publications = [
     ] as AuthorEntry[],
     venue: "CVPR 2024",
     year: 2024,
-    citations: 61,
+    citations: 62,
     type: "conference",
     description: "Creating autonomous 3D digital humans with social intelligence capabilities for realistic virtual interactions.",
     image: "/attached_assets/paper_teasers/2024_digitallifeproject.png",
