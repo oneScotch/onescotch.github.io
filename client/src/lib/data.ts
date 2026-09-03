@@ -235,7 +235,7 @@ export const publications = [
     ] as AuthorEntry[],
     venue: "CVPR 2026",
     year: 2025,
-    citations: 69,
+    citations: 70,
     type: "conference",
     description: "State-of-the-art multimodal foundation model for spatial intelligence benchmarks.",
     image: "/attached_assets/paper_teasers/2025_sensenova-si.png",
