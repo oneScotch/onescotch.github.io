@@ -326,7 +326,7 @@ export const publications = [
     ] as AuthorEntry[],
     venue: "ECCV 2024",
     year: 2024,
-    citations: 36,
+    citations: 37,
     type: "conference",
     description: "A framework for jointly estimating human models (SMPL-X) and camera poses from monocular video, using depth cues from human motion.",
     image: "/attached_assets/paper_teasers/2024_whac.jpg",
