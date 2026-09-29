@@ -253,7 +253,7 @@ export const publications = [
     ] as AuthorEntry[],
     venue: "ICLR 2026",
     year: 2025,
-    citations: 21,
+    citations: 22,
     type: "conference",
     description: "Comprehensive study on generalizable motion generation including data, model architecture, and evaluation methods.",
     image: "/attached_assets/paper_teasers/2025_ViMoGen.jpg",
