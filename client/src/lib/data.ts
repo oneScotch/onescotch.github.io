@@ -290,7 +290,7 @@ export const publications = [
     ] as AuthorEntry[],
     venue: "TPAMI 2025",
     year: 2025,
-    citations: 48,
+    citations: 49,
     type: "journal",
     description: "Scaling expressive human pose and shape estimation with large-scale training data and improved architectures.",
     image: "/attached_assets/paper_teasers/2025_smplestx.png",
