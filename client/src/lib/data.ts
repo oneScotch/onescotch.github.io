@@ -184,7 +184,7 @@ export const publications = [
     ] as AuthorEntry[],
     venue: "ECCV 2026",
     year: 2026,
-    citations: 11,
+    citations: 12,
     type: "conference",
     description: "Reasoning in video generation models happens along diffusion steps, not frames. We discover Chain-of-Steps — a new understanding of how video models think.",
     image: "/attached_assets/paper_teasers/2026_demystifying.jpg",
