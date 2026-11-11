@@ -20,6 +20,14 @@ npm run build
 
 The build output will be in the `dist` folder.
 
+## Citation Updates
+
+The **Update Citations** GitHub Actions workflow refreshes citation counts daily and can also be run manually. It uses Semantic Scholar's batch API. A valid `SEMANTIC_SCHOLAR_API_KEY` repository secret is optional; without one, requests use Semantic Scholar's shared public quota and may still be rate-limited during heavy use. Replace or remove a rejected key in the repository's Actions secrets.
+
+The `SEMANTIC_SCHOLAR_DELAY_MS` repository variable controls the minimum pause between requests (default: 1500 ms), including batch requests, retries, and authentication fallback. Rate limits are retried up to five total attempts with 15, 30, 60, and 120-second backoff. Longer `Retry-After` values are respected; a requested wait beyond 120 seconds stops further requests for that run instead of retrying early. Failed lookups retain their previous counts, and the workflow fails if every lookup fails.
+
+Run the request-handling tests with `node --test scripts/semantic_scholar.test.js`.
+
 ## Deploy to GitHub Pages
 
 ### Option 1: GitHub Actions (Recommended)

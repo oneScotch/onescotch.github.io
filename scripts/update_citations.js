@@ -3,56 +3,13 @@
 
 import fs from 'fs';
 import path from 'path';
-import axios from 'axios';
 import { fileURLToPath } from 'url';
+import { createSemanticScholarRequest } from './semantic_scholar.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const DATA_PATH = path.join(__dirname, '../client/src/lib/data.ts');
-const REQUEST_TIMEOUT_MS = 15_000;
-const MAX_REQUEST_ATTEMPTS = 3;
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-let apiKeyEnabled = Boolean(process.env.SEMANTIC_SCHOLAR_API_KEY);
-
-function apiHeaders() {
-  return apiKeyEnabled
-    ? { 'x-api-key': process.env.SEMANTIC_SCHOLAR_API_KEY }
-    : undefined;
-}
-
-async function semanticScholarRequest(config) {
-  let lastError;
-  for (let attempt = 1; attempt <= MAX_REQUEST_ATTEMPTS; attempt += 1) {
-    try {
-      return await axios({
-        ...config,
-        headers: apiHeaders(),
-        timeout: REQUEST_TIMEOUT_MS,
-      });
-    } catch (error) {
-      lastError = error;
-      const status = error.response?.status || null;
-
-      if ((status === 401 || status === 403) && apiKeyEnabled) {
-        apiKeyEnabled = false;
-        attempt -= 1;
-        console.warn('::warning title=Semantic Scholar API key rejected::Retrying without the configured API key. Replace or remove the SEMANTIC_SCHOLAR_API_KEY secret.');
-        continue;
-      }
-
-      const retryable = status === null || status === 429 || status >= 500;
-      if (!retryable || attempt === MAX_REQUEST_ATTEMPTS) break;
-
-      const retryAfter = Number(error.response?.headers?.['retry-after']);
-      const delay = Number.isFinite(retryAfter) && retryAfter > 0
-        ? Math.min(retryAfter * 1000, 30_000)
-        : 2000 * (2 ** (attempt - 1));
-      console.warn(`Semantic Scholar request failed (${status ?? error.code ?? 'network error'}); retrying in ${delay}ms.`);
-      await sleep(delay);
-    }
-  }
-  throw lastError;
-}
+const semanticScholarRequest = createSemanticScholarRequest();
 
 function extractArxivId(url) {
   const match = url.match(/arxiv\.org\/abs\/([^/?#\s]+)/);
@@ -106,8 +63,8 @@ async function getCitationCountByTitle(title) {
 }
 
 async function main() {
-  if (!process.env.SEMANTIC_SCHOLAR_API_KEY) {
-    console.warn('Warning: SEMANTIC_SCHOLAR_API_KEY not set — requests may be rate-limited.');
+  if (!process.env.SEMANTIC_SCHOLAR_API_KEY?.trim()) {
+    console.log('No Semantic Scholar API key configured; using the public API with rate-limit retries.');
   }
   let data = await fs.promises.readFile(DATA_PATH, 'utf8');
   const pubArrayMatch = data.match(/export const publications = \[([\s\S]*?)\r?\n\];/);
@@ -138,14 +95,6 @@ async function main() {
   }
   if (!blocks.length) throw new Error('No publication entries found');
 
-  // Delay between API requests to avoid rate limiting.
-  const delaySetting = process.env.SEMANTIC_SCHOLAR_DELAY_MS;
-  const configuredDelay = Number(delaySetting);
-  const DELAY_MS = delaySetting !== undefined && delaySetting !== ''
-    && Number.isFinite(configuredDelay) && configuredDelay >= 0
-    ? configuredDelay
-    : 1000;
-
   const statuses = [];
   let updated = 0, failed = 0, rateLimited = 0;
   const arxivBlocks = blocks.filter((block) => block.arxivId);
@@ -161,7 +110,6 @@ async function main() {
       res = resultByArxivId.get(b.arxivId);
     } else if (b.title) {
       res = await getCitationCountByTitle(b.title);
-      await sleep(DELAY_MS);
     }
     const timestamp = new Date().toISOString();
     if (res.count === null) {

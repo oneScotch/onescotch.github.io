@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   update-citations:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - name: Checkout repository
@@ -29,6 +29,8 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci
+      - name: Test citation request handling
+        run: node --test scripts/semantic_scholar.test.js
       - name: Run citation update script
         run: node scripts/update_citations.js
         env:
