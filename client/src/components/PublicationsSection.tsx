@@ -129,9 +129,9 @@ export function PublicationsSection() {
                       )}
                     </div>
                     <h3 className="font-semibold text-base mb-2 leading-tight">
-                      {pub.arxiv ? (
+                      {pub.proceedings || pub.arxiv ? (
                         <a
-                          href={pub.arxiv}
+                          href={pub.proceedings || pub.arxiv}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-primary hover:underline"
@@ -152,6 +152,14 @@ export function PublicationsSection() {
                       </p>
                     )}
                     <div className="flex flex-wrap items-center gap-2">
+                      {pub.proceedings && (
+                        <Button variant="outline" size="sm" asChild>
+                          <a href={pub.proceedings} target="_blank" rel="noopener noreferrer">
+                            <FileText className="h-4 w-4 mr-1" />
+                            Proceedings
+                          </a>
+                        </Button>
+                      )}
                       {pub.website && (
                         <Button variant="outline" size="sm" asChild>
                           <a href={pub.website} target="_blank" rel="noopener noreferrer">

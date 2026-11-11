@@ -175,7 +175,7 @@ export type AuthorEntry = { name: string; annotation?: "*" | "✉" | "*✉" };
 export const publications = [
   {
     id: 8,
-    title: "Demystifing Video Reasoning",
+    title: "Demystifying Video Reasoning",
     authors: [
       { name: "Ruisi Wang", annotation: "*" }, { name: "Zhongang Cai", annotation: "✉" }, { name: "Fanyi Pu" }, { name: "Junxiang Xu" },
       { name: "Wanqi Yin" }, { name: "Maijunxian Wang" }, { name: "Ran Ji" }, { name: "Chenyang Gu" },
@@ -189,6 +189,7 @@ export const publications = [
     description: "Reasoning in video generation models happens along diffusion steps, not frames. We discover Chain-of-Steps — a new understanding of how video models think.",
     image: "/attached_assets/paper_teasers/2026_demystifying.jpg",
     arxiv: "https://arxiv.org/abs/2603.16870",
+    proceedings: "https://doi.org/10.1007/978-3-032-37086-0_17",
     website: "https://www.wruisi.com/demystifying_video_reasoning/",
   },
   {

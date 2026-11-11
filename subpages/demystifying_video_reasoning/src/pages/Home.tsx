@@ -2,6 +2,19 @@ import { useRef, useEffect, useCallback, useState } from "react";
 
 const BASE = import.meta.env.BASE_URL;
 
+const BIBTEX = `@inproceedings{wang2026demystifying,
+  title={Demystifying Video Reasoning},
+  author={Wang, Ruisi and Cai, Zhongang and Pu, Fanyi and Xu, Junxiang and Yin, Wanqi and Wang, Maijunxian and Ji, Ran and Gu, Chenyang and Li, Bo and Huang, Ziqi and Deng, Hokin and Lin, Dahua and Liu, Ziwei and Yang, Lei},
+  booktitle={Computer Vision -- ECCV 2026},
+  series={Lecture Notes in Computer Science},
+  volume={17059},
+  pages={308--328},
+  publisher={Springer Nature Switzerland},
+  year={2026},
+  doi={10.1007/978-3-032-37086-0_17},
+  url={https://doi.org/10.1007/978-3-032-37086-0_17}
+}`;
+
 function SectionDivider() {
   return <div className="w-full max-w-[120px] mx-auto h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent my-16" />;
 }
@@ -680,27 +693,16 @@ export default function Home() {
             BibTeX
           </h2>
           <p className="text-gray-500 mb-6 leading-relaxed text-sm">
-            If you find this work useful, please cite our paper:
+            If you find this work useful, please cite our paper published in the{" "}
+            <a href="https://doi.org/10.1007/978-3-032-37086-0_17" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:underline">ECCV 2026 proceedings</a>:
           </p>
           <div className="relative group">
             <pre className="bg-white text-gray-700 text-xs md:text-sm leading-relaxed rounded-xl p-5 md:p-6 overflow-x-auto border border-gray-200 font-mono">
-{`@article{wang2026demystifing,
-  title={Demystifing Video Reasoning},
-  author={Wang, Ruisi and Cai, Zhongang and Pu, Fanyi and Xu, Junxiang and Yin, Wanqi and Wang, Maijunxian and Ji, Ran and Gu, Chenyang and Li, Bo and Huang, Ziqi and Deng, Hokin and Lin, Dahua and Liu, Ziwei and Yang, Lei},
-  journal={arXiv preprint arXiv:2603.16870},
-  year={2026}
-}`}
+              {BIBTEX}
             </pre>
             <button
               onClick={() => {
-                navigator.clipboard.writeText(
-`@article{wang2026demystifing,
-  title={Demystifing Video Reasoning},
-  author={Wang, Ruisi and Cai, Zhongang and Pu, Fanyi and Xu, Junxiang and Yin, Wanqi and Wang, Maijunxian and Ji, Ran and Gu, Chenyang and Li, Bo and Huang, Ziqi and Deng, Hokin and Lin, Dahua and Liu, Ziwei and Yang, Lei},
-  journal={arXiv preprint arXiv:2603.16870},
-  year={2026}
-}`
-                );
+                navigator.clipboard.writeText(BIBTEX);
               }}
               className="absolute top-3 right-3 px-3 py-1.5 text-xs font-medium text-gray-500 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg transition-colors"
             >
