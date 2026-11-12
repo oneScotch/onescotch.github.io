@@ -213,7 +213,7 @@ export const publications = [
     ] as AuthorEntry[],
     venue: "ICML 2026",
     year: 2026,
-    citations: 33,
+    citations: 34,
     type: "conference",
     description: "A very big video reasoning suite including million-scale video dataset, rule-based benchmark, strong baseline model that enables systematic training and evaluation of reasoning capabilities of video models.",
     image: "/attached_assets/paper_teasers/2026_VBVR.jpg",
